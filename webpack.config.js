@@ -11,8 +11,7 @@ module.exports = {
   },
   entry: {
     app: './app',
-    vendor: ['lodash', 'jquery'],
-    appcss: './styles/app'
+    vendor: ['lodash', 'jquery']
   },
   output: {
     path: path.resolve(__dirname, 'build'),
