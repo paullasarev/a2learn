@@ -1,0 +1,19 @@
+{
+  "name": "a2learn",
+  "version": "1.0.0",
+  "description": "angular 2 learn project",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paullasarev/a2learn.git"
+  },
+  "author": "paullasarev@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paullasarev/a2learn/issues"
+  },
+  "homepage": "https://github.com/paullasarev/a2learn#readme"
+}
