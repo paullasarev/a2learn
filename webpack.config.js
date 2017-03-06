@@ -10,7 +10,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.scss']
   },
   entry: {
-    app: './app',
+    app: './index',
     vendor: ['lodash', 'jquery']
   },
   output: {
@@ -43,19 +43,40 @@ module.exports = {
   ],
 
   module: {
-    rules: [{
-      test: /\.ts$/,
-      loader: 'awesome-typescript-loader',
-      options: {
-        useCache: true
-      }
-    }, {
-      test: /\.scss$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: ['css-loader', 'sass-loader']
-      })
-    }]
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'awesome-typescript-loader',
+        options: {
+          useCache: true
+        }
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
+      },
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader"
+      },
+      {
+        test: /\.ts$/,
+        use: [
+          {
+            loader: 'tslint-loader',
+            options: {
+              configFile: 'tslint.json',
+              "typeCheck": true
+            }
+          }
+        ],
+        exclude: [/\.(spec|e2e)\.ts$/]
+      },
+
+    ]
   }
 
 };

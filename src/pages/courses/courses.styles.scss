@@ -1,0 +1,17 @@
+@import "../../styles/colors.scss";
+
+.courses {
+  padding-top: 10px;
+
+  &__list {
+    margin-top: 5px;
+  }
+
+  &__course {
+    margin-top: 5px;
+  }
+}
+
+course {
+  padding: 10px;
+}
