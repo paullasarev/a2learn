@@ -3,11 +3,16 @@
 .courses {
   padding-top: 10px;
 
-  &__list {
-    margin-top: 5px;
+  &__title {
+    font-size: 2em;
+    font-weight: bold;
   }
 
-  &__course {
+  &__list {
+    margin-top: 10px;
+  }
+
+  &__item {
     margin-top: 5px;
   }
 }

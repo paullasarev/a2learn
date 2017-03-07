@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -39,7 +40,15 @@ module.exports = {
       filename: '[name].[contenthash].css',
       disable: false,
       allChunks: true
-    })
+    }),
+    new ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      path.resolve(__dirname, './src'), // location of your src
+      {
+        // your Angular Async Route paths relative to this root directory
+      }
+    ),
   ],
 
   module: {
@@ -63,18 +72,22 @@ module.exports = {
         loader: "ts-loader"
       },
       {
-        test: /\.ts$/,
-        use: [
-          {
-            loader: 'tslint-loader',
-            options: {
-              configFile: 'tslint.json',
-              "typeCheck": true
-            }
-          }
-        ],
-        exclude: [/\.(spec|e2e)\.ts$/]
-      },
+        test: /\.html$/,
+        loader: 'raw-loader',
+        exclude: ['./src/index.html']
+      }
+      // {
+      //   test: /\.ts$/,
+      //   use: [
+      //     {
+      //       loader: 'tslint-loader',
+      //       options: {
+      //         configFile: 'tslint.json'
+      //       }
+      //     }
+      //   ],
+      //   exclude: [/\.(spec|e2e)\.ts$/]
+      // },
 
     ]
   }

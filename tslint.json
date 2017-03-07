@@ -7,7 +7,7 @@
 	],
 	"rules": {
 		// Custom
-    "typeCheck": true,
+//    "typeCheck": true,
 
     "trailing-comma": [
 			false,
@@ -59,7 +59,7 @@
 		],
 		"indent": [
 			true,
-			"tabs"
+			"spaces"
 		],
 		"no-string-literal": false,
 		"no-use-before-declare": true,

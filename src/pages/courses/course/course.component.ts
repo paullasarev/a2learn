@@ -1,16 +1,16 @@
 import { Component, ViewEncapsulation, Input } from '@angular/core';
-import {Course} from '../../../entities';
+import {Course} from '../../../entities/course';
 // import { TodoItem } from '../../../core/entities';
 // import { todoStatusClasses } from '../../../core/enums';
 
 @Component({
   selector: 'course',
   templateUrl: 'course.component.html',
-  styles: [require('./course.component.scss')],
+  styles: [require('./course.styles.scss')],
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
-export class TodoItemComponent {
+export class CourseComponent {
   // @Input() public todo: TodoItem;
   public course: Course;
 

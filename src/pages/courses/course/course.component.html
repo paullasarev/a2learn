@@ -1,7 +1,7 @@
 <div class="course" [ngClass]="calculateStatusClass(course.status)">
-  <div class="col-sm-3">{{course.title}}</div>
-  <div class="col-sm-4">{{course.description}}</div>
-  <div class="col-sm-2">{{course.startDate | date : 'MM/dd/yyyy'}}</div>
-  <div class="col-sm-2">{{course.endDate | date : 'MM/dd/yyyy'}}</div>
-  <div class="col-sm-1">{{course.status}}</div>
+  <div class="course__title">{{course.title}}</div>
+  <div class="course__description">{{course.description}}</div>
+  <div class="course__start-date">{{course.startDate | date : 'MM/dd/yyyy'}}</div>
+  <div class="course__end-date">{{course.endDate | date : 'MM/dd/yyyy'}}</div>
+  <div class="course__status">{{course.status}}</div>
 </div>

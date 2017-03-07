@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { CoursesModule } from './pages/courses/courses.module';
 
 import {
   NgModule,
@@ -25,16 +26,16 @@ import { NoContentComponent } from './pages/no-content';
   imports: [ // import Angular's modules
     BrowserModule,
     RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
+    CoursesModule,
     // HeaderModule,
     // FooterModule,
     // HomeModule,
   ],
-  // providers: [ // expose our Services and Providers into Angular's dependency injection
-  //   ENV_PROVIDERS,
-  //   APP_PROVIDERS
-  // ]
+  providers: [ // expose our Services and Providers into Angular's dependency injection
+    // ENV_PROVIDERS,
+    // APP_PROVIDERS
+  ]
 })
-
 export class AppModule {
 
   constructor(public appRef: ApplicationRef) {

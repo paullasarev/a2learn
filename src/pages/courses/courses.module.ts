@@ -19,11 +19,12 @@ import { CourseComponent } from './course/course.component';
     routes,
     // FormsModule,
     // ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    // CourseComponent,
   ],
   providers: []
 })
-export class CoursesHomeModule {
+export class CoursesModule {
   constructor() {
   }
 }

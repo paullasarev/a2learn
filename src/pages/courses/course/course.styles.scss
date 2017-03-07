@@ -1,11 +1,25 @@
 @import "../../../styles/colors.scss";
 
-.main-footer {
-  background-color: $c-primary;
-  color: $white;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
+.course {
+  display: block;
+
+  &__title {
+    diplay: inline-block;
+  }
+
+  &__description {
+    diplay: inline-block;
+  }
+
+  &__start-date {
+    diplay: inline-block;
+  }
+
+  &__end-date {
+    diplay: inline-block;
+  }
+
+  &__status {
+    diplay: inline-block;
+  }
 }

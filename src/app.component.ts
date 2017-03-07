@@ -1,6 +1,4 @@
-/*
- * Angular 2 decorators and services
- */
+
 import {
   Component,
   OnInit,

@@ -1,7 +1,9 @@
 <div class="courses">
-  <h4>courses:</h4>
+  <div class="courses__title">courses:</div>
   <div class="courses__list">
-    <course *ngFor="let course of courses" [course]="course"></course>
+    <div class="courses__item" *ngFor="let course of courses">
+      <course [course]="course"></course>
+    </div>
   </div>
   <div *ngIf="isLoading">Is loading...</div>
 </div>
