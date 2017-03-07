@@ -14,7 +14,7 @@ import {Course} from '../../entities/course';
 export class CoursesComponent implements OnInit, OnDestroy {
   // private todoServiceSubscription: Subscription;
   private courses: Course[];
-  private isLoading: boolean = false;
+  // private isLoading: boolean = false;
 
   constructor() {
     console.log('courses page constructor');

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const helpers = require('./config/helpers');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -11,30 +12,33 @@ module.exports = {
     extensions: ['.ts', '.js', '.scss']
   },
   entry: {
-    app: './index',
-    vendor: ['lodash', 'jquery']
+    polyfills: './polyfills.ts',
+    app: './main',
+    vendor: './vendor'
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: '[name].js'
+    path: helpers.root('build'),
+    publicPath: '/',
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js',
+    sourceMapFilename: '[name].map'
   },
   //devtool: 'eval', //quick
   devtool: 'source-map', //standard
 
   plugins: [
     new CaseSensitivePathsPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
+    // new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
       PRODUCTION: false
     }),
     new HtmlWebpackPlugin({
       title: 'Test',
-      hash: true
-      //template: './index.html'
+      hash: true,
+      template: './index.html'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['common', 'vendor'],
-      minChunks: 2
+      name: ['app', 'vendor', 'polyfills']
     }),
     new ExtractTextPlugin({
       filename: '[name].[contenthash].css',
@@ -62,10 +66,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
+        use: ['to-string-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.tsx?$/,
@@ -73,22 +74,9 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: 'raw-loader',
-        exclude: ['./src/index.html']
-      }
-      // {
-      //   test: /\.ts$/,
-      //   use: [
-      //     {
-      //       loader: 'tslint-loader',
-      //       options: {
-      //         configFile: 'tslint.json'
-      //       }
-      //     }
-      //   ],
-      //   exclude: [/\.(spec|e2e)\.ts$/]
-      // },
-
+        use: 'raw-loader',
+        exclude: [helpers.root('src/index.html')]
+      },
     ]
   }
 

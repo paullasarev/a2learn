@@ -5,14 +5,14 @@ import {Course} from '../../../entities/course';
 
 @Component({
   selector: 'course',
-  templateUrl: 'course.component.html',
+  template: require('./course.component.html'),
   styles: [require('./course.styles.scss')],
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
 export class CourseComponent {
   // @Input() public todo: TodoItem;
-  public course: Course;
+  @Input() public course: Course;
 
   constructor() {
   }
