@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { NoContentComponent } from './pages/no-content';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
+import { AppToolbarComponent } from './components/app-toolbar/app-toolbar.component';
 
 import { ROUTES } from './app.routes';
 
@@ -24,6 +25,7 @@ import { ROUTES } from './app.routes';
     AppComponent,
     AppHeaderComponent,
     AppFooterComponent,
+    AppToolbarComponent,
     NoContentComponent
   ],
   imports: [ // import Angular's modules

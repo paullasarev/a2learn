@@ -1,0 +1,20 @@
+@import "../../styles/variables";
+
+.search {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  height: $input-height;
+
+  &__input {
+    flex-grow: 15;
+    border: 1px solid $color-input-border;
+    outline: none;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  &__find {
+    margin-left: 10px;
+    flex-grow: 1;
+  }
+}

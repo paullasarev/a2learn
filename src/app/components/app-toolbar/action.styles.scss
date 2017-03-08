@@ -1,0 +1,41 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.action {
+  display: inline-block;
+  height: $input-height;
+  position: relative;
+
+  &__icon {
+    display: inline-block;
+    vertical-align: middle;
+
+    &--add {
+      @include background-image("OOjs_UI_icon_add.svg", $input-height - 4);
+      position: absolute;
+      left: 2px;
+      top: 2px;
+    }
+
+  }
+
+  &__button {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    outline: none;
+    cursor: pointer;
+
+
+    border: 1px solid $color-input-border;
+    background-color: $color-button-bg;
+
+    &:hover {
+      background-color: darken($color-button-bg, 10%);
+    }
+
+    &--with-icon {
+      padding-left: $input-height;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+
+.app-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+
+  height: $toolbar-height;
+  background-color: $color-toolbar-bg;
+
+  &__search {
+    margin-left: 5px;
+    flex-grow: 5;
+  }
+  &__add {
+    margin-left: 10px;
+    margin-right: 5px;
+  }
+}
