@@ -1,0 +1,8 @@
+@import "../../styles/variables";
+
+.breadcrumbs {
+  background-color: $color-breadcrumbs-bg;
+  border: 1px solid $color-breadcrumbs-border;
+  border-radius: 3px;
+  padding: 5px;
+}

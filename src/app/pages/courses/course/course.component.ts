@@ -1,6 +1,5 @@
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import {Component, ViewEncapsulation, Input} from '@angular/core';
 import {Course} from '../../../entities/course';
-// import { TodoItem } from '../../../core/entities';
 // import { todoStatusClasses } from '../../../core/enums';
 
 @Component({

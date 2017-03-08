@@ -1,0 +1,14 @@
+@import "../../styles/variables";
+
+.user {
+  font-size: 14px;
+
+  &__info {
+    text-aligh: right;
+    
+  }
+  &__logoff {
+    color: $color-active-link;
+    text-align: right;
+  }
+}

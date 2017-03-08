@@ -1,0 +1,29 @@
+@import "../../styles/variables";
+
+.app-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+
+  font-size: 22px;
+  background-color: $color-header-bg;
+  height: $header-height;
+  
+  &__logo {
+    margin-left: 5px;
+  }
+  &__title {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  &__breadcrumbs {
+    flex-grow: 2;
+    margin-right: 20px;
+  }
+  &__user {
+    margin-right: 10px;
+  }
+}

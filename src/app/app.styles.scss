@@ -1,3 +1,5 @@
+@import "./styles/variables.scss";
+
 html, body{
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
@@ -9,10 +11,21 @@ a.active {
 }
 
 .app {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: stretch;
+  flex-grow: 1;  
+
+  min-height: 100%;
+  background-color: $color-app-bg;
+  
   &__header {
 
   }
   &__content {
+    flex-grow: 2;
 
   }
   &__footer {

@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+
+.app-footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+
+  height: $footer-height;
+
+  background-color: $color-footer-bg;  
+
+  &__copyright {
+    font-size: 12px;
+  }
+}
