@@ -12,6 +12,11 @@ import {Component, ViewEncapsulation} from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AppToolbarComponent {
+  private filter: string = "string to search";
   constructor() {
+  }
+
+  public onFind() {
+    console.log('onFind', this.filter);
   }
 }

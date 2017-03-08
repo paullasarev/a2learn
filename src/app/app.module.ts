@@ -9,6 +9,8 @@ import {
 } from '@angular/router';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+
 import { CoursesModule } from './pages/courses/courses.module';
 import { AppComponent } from './app.component';
 import { NoContentComponent } from './pages/no-content';
@@ -30,6 +32,7 @@ import { ROUTES } from './app.routes';
   ],
   imports: [ // import Angular's modules
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
     CoursesModule,
   ],

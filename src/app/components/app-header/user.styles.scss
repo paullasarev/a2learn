@@ -10,5 +10,9 @@
   &__logoff {
     color: $color-active-link;
     text-align: right;
+    cursor: pointer;
+    &:hover {
+      color: darken($color-active-link, 20%);
+    }
   }
 }

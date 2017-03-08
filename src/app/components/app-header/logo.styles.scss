@@ -1,10 +1,15 @@
 @import "../../styles/variables";
 
 .logo {
-  height: $header-height;
-  width: $header-height;
+  height: $header-height - 4px;
+  width: $header-height - 4px;
   background-image: url(/img/angular-logo.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
 }
