@@ -16,7 +16,11 @@ export class AppToolbarComponent {
   constructor() {
   }
 
-  public onFind() {
-    console.log('onFind', this.filter);
+  public doFind() {
+    console.log('doFind', this.filter);
+  }
+
+  public doAdd() {
+    console.log('doAdd', this.filter);
   }
 }
