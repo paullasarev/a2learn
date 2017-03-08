@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, Input} from '@angular/core';
+import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
 import {Course} from '../../../entities/course';
 // import { todoStatusClasses } from '../../../core/enums';
 
@@ -10,10 +10,19 @@ import {Course} from '../../../entities/course';
   encapsulation: ViewEncapsulation.None
 })
 export class CourseComponent {
-  // @Input() public todo: TodoItem;
   @Input() public course: Course;
+  @Output() public onDelete = new EventEmitter();
 
   constructor() {
+  }
+
+  public doEdit() {
+    console.log('doEdit', this.course);
+  }
+
+  public doDelete() {
+    console.log('doDelete', this.course);
+    this.onDelete.emit(this.course);
   }
 
   public calculateStatusClass(status): string {

@@ -1,13 +1,15 @@
 @import "../../styles/mixins";
 @import "../../styles/variables";
+@import "../../styles/variables";
+//TODO extract 'action' component
 
 .action {
-  display: inline-block;
+  display: block;
   height: $input-height;
   position: relative;
 
   &__icon {
-    display: inline-block;
+    display: block;
     vertical-align: middle;
 
     &--add {
@@ -20,8 +22,9 @@
   }
 
   &__button {
-    display: inline-block;
+    display: block;
     height: 100%;
+    width: 100%;
     vertical-align: middle;
     outline: none;
     cursor: pointer;
@@ -29,6 +32,7 @@
     font-size: $button-font-size;
     border: 1px solid $color-input-border;
     background-color: $color-button-bg;
+    white-space: nowrap;
 
     &:hover {
       background-color: darken($color-button-bg, 10%);

@@ -1,16 +1,23 @@
 import {CourseStatus} from "../enums/course-status";
 
 export class Course {
+  public id: string;
   public title: string;
   public description: string;
-  public startDate: Date;
-  public endDate: Date;
-  public status: CourseStatus;
+  public creatingDate: Date;
+  public duration: number;
+  public status: CourseStatus = CourseStatus.Draft;
 
-  constructor(title: string, description: string, startDate?: Date, endDate?: Date) {
+  constructor(
+    id:string, 
+    title: string, 
+    description: string, 
+    duration: number, 
+    creatingDate?: Date) {
+    this.id = id;
     this.title = title;
     this.description = description;
-    this.startDate = startDate ? startDate : new Date();
-    this.endDate = endDate ? endDate : new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1);
+    this.duration = duration;
+    this.creatingDate = creatingDate ? creatingDate : new Date();
   }
 }
