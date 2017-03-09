@@ -21,6 +21,6 @@ export class AppToolbarComponent {
   }
 
   public doAdd() {
-    console.log('doAdd', this.filter);
+    console.log('doAdd');
   }
 }

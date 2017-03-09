@@ -3,17 +3,11 @@
     <div class="search">
       <input type="text" class="search__input" [(ngModel)]="filter">
       <div class="search__find">
-        <div class="action">
-          <button class="action__button" (click)="doFind()">Find</button>
-        </div>
+        <action (action)="doFind()" title="Find"></action>
       </div>
     </div>
   </div>
   <div class="app-toolbar__add">
-    <div class="action">
-      <div class="action__icon action__icon--add"></div>
-      <button class="action__button action__button--with-icon" (click)="doAdd()">Add course
-      </button>
-    </div>
+    <action (action)="doAdd()" title="Add course" icon="add"></action>
   </div>
 </div>

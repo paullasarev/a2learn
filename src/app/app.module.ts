@@ -17,6 +17,7 @@ import { NoContentComponent } from './pages/no-content';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
 import { AppToolbarComponent } from './components/app-toolbar/app-toolbar.component';
+import { AppCommonModule } from './modules/app-common/app-common.module';
 
 import { ROUTES } from './app.routes';
 
@@ -35,6 +36,7 @@ import { ROUTES } from './app.routes';
     FormsModule,
     RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
     CoursesModule,
+    AppCommonModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
   ]

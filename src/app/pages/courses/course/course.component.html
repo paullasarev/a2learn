@@ -10,15 +10,10 @@
   </div>
   <div class="course__actions">
     <div class="course__action">
-      <div class="action">
-        <button class="action__button" (click)="doEdit()">Edit course</button>
-      </div>
+      <action (action)="doEdit()" title="Edit course"></action>
     </div>
     <div class="course__action">
-      <div class="action">
-        <button class="action__button" (click)="doDelete()">Delete</button>
-      </div>
+      <action (action)="doDelete()" title="Delete"></action>
     </div>
-
   </div>
 </div>
