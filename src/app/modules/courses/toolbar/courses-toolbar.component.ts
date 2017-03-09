@@ -2,16 +2,15 @@ import {Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
-  template: require('./app-toolbar.component.html'),
+  template: require('./courses-toolbar.component.html'),
   styles: [
-    require('./app-toolbar.styles.scss'),
-    require('./search.styles.scss'),
-    require('./action.styles.scss'),
+    require('./courses-toolbar.styles.scss'),
+    require('./courses-search.styles.scss'),
   ],
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
-export class AppToolbarComponent {
+export class CoursesToolbarComponent {
   private filter: string = "string to search";
   constructor() {
   }

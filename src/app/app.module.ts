@@ -9,14 +9,12 @@ import {
 } from '@angular/router';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 
 import { CoursesModule } from './modules/courses/courses.module';
 import { AppComponent } from './app.component';
 import { NoContentComponent } from './modules/no-content/no-content.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
-import { AppToolbarComponent } from './components/app-toolbar/app-toolbar.component';
 import { AppCommonModule } from './modules/app-common/app-common.module';
 
 import { ROUTES } from './app.routes';
@@ -28,12 +26,10 @@ import { ROUTES } from './app.routes';
     AppComponent,
     AppHeaderComponent,
     AppFooterComponent,
-    AppToolbarComponent,
     NoContentComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
-    FormsModule,
     RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
     CoursesModule,
     AppCommonModule,
