@@ -10,12 +10,12 @@ import {
 
 import { BrowserModule } from '@angular/platform-browser';
 
-import { CoursesModule } from './modules/courses/courses.module';
+import { CoursesModule } from '../courses/courses.module';
 import { AppComponent } from './app.component';
-import { NoContentComponent } from './modules/no-content/no-content.component';
-import { AppHeaderComponent } from './components/app-header/app-header.component';
-import { AppFooterComponent } from './components/app-footer/app-footer.component';
-import { AppCommonModule } from './modules/app-common/app-common.module';
+import { NoContentComponent } from './no-content/no-content.component';
+import { AppHeaderComponent } from './app-header/app-header.component';
+import { AppFooterComponent } from './app-footer/app-footer.component';
+import { AppCommonModule } from '../app-common/app-common.module';
 
 import { ROUTES } from './app.routes';
 

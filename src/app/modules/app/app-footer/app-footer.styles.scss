@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@import "../../../styles/variables";
 
 .app-footer {
   display: flex;
@@ -10,7 +10,7 @@
 
   height: $footer-height;
 
-  background-color: $color-footer-bg;  
+  background-color: $color-footer-bg;
 
   &__copyright {
     font-size: 12px;

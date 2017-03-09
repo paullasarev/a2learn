@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@import "../../../styles/variables";
 
 .app-header {
   display: flex;
@@ -11,7 +11,7 @@
   font-size: 22px;
   background-color: $color-header-bg;
   height: $header-height;
-  
+
   &__logo {
     margin-left: 5px;
   }

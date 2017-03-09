@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActionComponent } from '../../components/action/action.component';
+import { ActionComponent } from './action/action.component';
 
 @NgModule({
   declarations: [
