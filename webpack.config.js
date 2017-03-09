@@ -32,7 +32,7 @@ var config  = {
     extensions: ['.ts', '.js', '.scss']
   },
   entry: {
-    polyfills: './polyfills.ts',
+    polyfills: './polyfills',
     app: './main',
     vendor: './vendor'
   },
@@ -48,7 +48,7 @@ var config  = {
 
   plugins: [
     new CaseSensitivePathsPlugin(),
-    
+
     new webpack.DefinePlugin({
       PRODUCTION: isProd
     }),
@@ -75,7 +75,7 @@ var config  = {
     ),
     new CopyWebpackPlugin([
       { from: 'app/assets' },
-    ]),  
+    ]),
   ],
 
   module: {
