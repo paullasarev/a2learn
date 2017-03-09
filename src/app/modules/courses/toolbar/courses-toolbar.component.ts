@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,11 +12,14 @@ import {Component, ViewEncapsulation} from '@angular/core';
 })
 export class CoursesToolbarComponent {
   private filter: string = "string to search";
+  @Output() public find = new EventEmitter();
+
   constructor() {
   }
 
   public doFind() {
     console.log('doFind', this.filter);
+    this.find.emit(this.filter);
   }
 
   public doAdd() {

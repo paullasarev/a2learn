@@ -17,6 +17,8 @@ import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
 import { AppCommonModule } from '../app-common/app-common.module';
 
+import { CoursesService } from '../../services/courses-service';
+
 import { ROUTES } from './app.routes';
 
 
@@ -35,6 +37,7 @@ import { ROUTES } from './app.routes';
     AppCommonModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
+    CoursesService,
   ]
 })
 export class AppModule {

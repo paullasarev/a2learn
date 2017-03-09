@@ -1,42 +1,48 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-//import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
-import {Course} from '../../entities/course';
-// import { TodoService } from '../../core/services';
+import {Course, Courses} from '../../entities/course';
+import {CoursesService} from '../../services/courses-service';
 
 @Component({
   selector: 'courses',
   encapsulation: ViewEncapsulation.None,
-  providers: [],
+  providers: [CoursesService],
   styles: [require('./courses.styles.scss')],
   template: require('./courses.template.html')
 })
 export class CoursesComponent implements OnInit, OnDestroy {
-  // private todoServiceSubscription: Subscription;
+  private coursesSubscription: Subscription;
   public courses: Course[];
-  // private isLoading: boolean = false;
+  private isLoading: boolean = false;
 
-  constructor() {
-    console.log('courses page constructor');
-
-    this.courses = [
-      new Course('1', 'javascript', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore fuga tenetur illum, reprehenderit possimus architecto optio maxime dolore iure, nobis, provident. Repellat quod cupiditate doloremque esse natus vero delectus dolores!', 600),
-      new Course( '2', 'CSS', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora repellendus deleniti temporibus nesciunt culpa recusandae excepturi mollitia minima, provident commodi maxime illum voluptates architecto et nobis corrupti. Optio esse, quod.', 300)
-    ];
+  constructor(private coursesService: CoursesService) {
+    // this.courses = [
+    //   new Course('1', 'javascript', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore fuga tenetur illum, reprehenderit possimus architecto optio maxime dolore iure, nobis, provident. Repellat quod cupiditate doloremque esse natus vero delectus dolores!', 600),
+    //   new Course( '2', 'CSS', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora repellendus deleniti temporibus nesciunt culpa recusandae excepturi mollitia minima, provident commodi maxime illum voluptates architecto et nobis corrupti. Optio esse, quod.', 300)
+    // ];
   }
 
   public ngOnInit() {
-    console.log('Courses page init');
+    this.coursesSubscription = this.coursesService.source.subscribe((courses: Courses) => {
+      this.isLoading = false;
+      this.courses = courses;
+    });
 
-    //this.isLoading = true;
-    // this.todoServiceSubscription = this.todoService.getTodoItems().subscribe((res: TodoItem[]) => {
-    //   this.todoList = res;
-    //   this.isLoading = false;
-    // });
+    this.loadData();
+  }
+
+  private loadData(filter?: string) {
+    this.isLoading = true;
+    this.coursesService.start(filter);
   }
 
   public ngOnDestroy() {
-    // this.todoServiceSubscription.unsubscribe();
+    this.coursesSubscription.unsubscribe();
+  }
+
+  public onFind(filter: string) {
+    this.loadData(filter);
   }
 
   public onDelete(course) {

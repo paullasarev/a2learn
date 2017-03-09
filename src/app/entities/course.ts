@@ -9,10 +9,10 @@ export class Course {
   public status: CourseStatus = CourseStatus.Draft;
 
   constructor(
-    id:string, 
-    title: string, 
-    description: string, 
-    duration: number, 
+    id:string,
+    title: string,
+    description: string,
+    duration: number,
     creatingDate?: Date) {
     this.id = id;
     this.title = title;
@@ -21,3 +21,5 @@ export class Course {
     this.creatingDate = creatingDate ? creatingDate : new Date();
   }
 }
+
+export type Courses = Array<Course>;
