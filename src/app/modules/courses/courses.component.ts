@@ -13,7 +13,7 @@ import {Course} from '../../entities/course';
 })
 export class CoursesComponent implements OnInit, OnDestroy {
   // private todoServiceSubscription: Subscription;
-  private courses: Course[];
+  public courses: Course[];
   // private isLoading: boolean = false;
 
   constructor() {

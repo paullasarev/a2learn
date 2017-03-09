@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { CoursesComponent } from './pages/courses/courses.component';
-import { NoContentComponent } from './pages/no-content';
+import { CoursesComponent } from './modules/courses/courses.component';
+import { NoContentComponent } from './modules/no-content/no-content.component';
 
 export const ROUTES: Routes = [
   {path: '', component: CoursesComponent},

@@ -11,9 +11,9 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
-import { CoursesModule } from './pages/courses/courses.module';
+import { CoursesModule } from './modules/courses/courses.module';
 import { AppComponent } from './app.component';
-import { NoContentComponent } from './pages/no-content';
+import { NoContentComponent } from './modules/no-content/no-content.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppFooterComponent } from './components/app-footer/app-footer.component';
 import { AppToolbarComponent } from './components/app-toolbar/app-toolbar.component';

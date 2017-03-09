@@ -1,6 +1,5 @@
 import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
 import {Course} from '../../../entities/course';
-// import { todoStatusClasses } from '../../../core/enums';
 
 @Component({
   selector: 'course',
@@ -26,7 +25,6 @@ export class CourseComponent {
   }
 
   public calculateStatusClass(status): string {
-    //return todoStatusClasses[status];
     return 'open';
   }
 }

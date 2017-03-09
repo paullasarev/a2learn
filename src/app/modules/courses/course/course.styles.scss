@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss";
+@import "../../../styles/variables";
 
 .course {
   display: flex;
@@ -27,7 +27,7 @@
   &__action {
     // margin-top: 10px;
     margin-bottom: 5px;
-    &:last-chield {
+    &:last-child {
       margin-bottom: 0;
     }
   }
@@ -42,31 +42,25 @@
 
   &__id {
     margin-left: 10px;
-    diplay: inline-block;
   }
 
   &__title {
-    diplay: inline-block;
   }
 
   &__description {
     margin-top: 10px;
     margin-bottom: 10px;
-    diplay: inline-block;
   }
 
   &__creating-date {
     margin-left: auto;
-    diplay: inline-block;
   }
 
   &__duration {
     margin-left: 10px;
     margin-right: 10px;
-    diplay: inline-block;
   }
 
   &__status {
-    diplay: inline-block;
   }
 }
