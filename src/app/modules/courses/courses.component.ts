@@ -17,35 +17,33 @@ export class CoursesComponent implements OnInit, OnDestroy {
   private isLoading: boolean = false;
 
   constructor(private coursesService: CoursesService) {
-    // this.courses = [
-    //   new Course('1', 'javascript', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore fuga tenetur illum, reprehenderit possimus architecto optio maxime dolore iure, nobis, provident. Repellat quod cupiditate doloremque esse natus vero delectus dolores!', 600),
-    //   new Course( '2', 'CSS', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora repellendus deleniti temporibus nesciunt culpa recusandae excepturi mollitia minima, provident commodi maxime illum voluptates architecto et nobis corrupti. Optio esse, quod.', 300)
-    // ];
   }
 
   public ngOnInit() {
-    this.coursesSubscription = this.coursesService.source.subscribe((courses: Courses) => {
-      this.isLoading = false;
-      this.courses = courses;
-    });
-
-    this.loadData();
-  }
-
-  private loadData(filter?: string) {
-    this.isLoading = true;
-    this.coursesService.start(filter);
+    this.coursesSubscription = this.coursesService.courses.subscribe(this.gotData.bind(this));
+    this.askData();
   }
 
   public ngOnDestroy() {
     this.coursesSubscription.unsubscribe();
   }
 
+  private gotData(courses: Courses) {
+    console.log('CoursesComponent.gotData');
+    this.isLoading = false;
+    this.courses = courses;
+  }
+
+  private askData(filter?: string) {
+    this.isLoading = true;
+    this.coursesService.ask(filter);
+  }
+
   public onFind(filter: string) {
-    this.loadData(filter);
+    this.askData(filter);
   }
 
   public onDelete(course) {
-    console.log('couses.onDelete', course);
+    console.log('CoursesComponent.onDelete', course);
   }
 }

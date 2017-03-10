@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subscriber} from "rxjs";
+import {Observable, Subject} from "rxjs";
 
 import {Course, Courses}  from "../entities/course";
 
 @Injectable()
 export class CoursesService {
   private coursesData: Courses;
-  private coursesObserver: Subscriber<Courses>;
-  private source_: Observable<Courses>;
+  private requests: Subject<string>;
+  private courses$: Observable<Courses>;
 
   constructor() {
     this.coursesData = [
@@ -15,18 +15,20 @@ export class CoursesService {
       new Course( '2', 'CSS', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora repellendus deleniti temporibus nesciunt culpa recusandae excepturi mollitia minima, provident commodi maxime illum voluptates architecto et nobis corrupti. Optio esse, quod.', 300)
     ];
 
-    this.source_ = Observable.create((observer:Subscriber<Courses>)=>{
-      this.coursesObserver = observer;
-    })
+    this.requests = new Subject<string>();
+
+    this.courses$ = this.requests.flatMap((filter) => {
+      console.log('service.filter', filter)
+      return Observable.of(this.coursesData)
+        .delay(700);
+    }).debounceTime(300);
   }
 
-  public start(filter?: string) : void {
-    window.setTimeout(()=>{
-      this.coursesObserver.next(this.coursesData);
-    }, 500);
+  public ask(filter?: string) : void {
+    this.requests.next(filter);
   }
 
-  public get source() : Observable<Courses> {
-    return this.source_;
+  public get courses() : Observable<Courses> {
+    return this.courses$;
   }
 }
