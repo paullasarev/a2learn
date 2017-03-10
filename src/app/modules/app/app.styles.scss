@@ -18,12 +18,13 @@ html, body {
   background-color: $color-app-bg;
 
   &__header {
-
   }
+
   &__content {
     flex-grow: 2;
   }
-  &__footer {
 
+  &__footer {
+    margin-top: 10px;
   }
 }
