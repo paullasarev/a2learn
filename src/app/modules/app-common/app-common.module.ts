@@ -4,7 +4,7 @@ import { ActionComponent } from './action/action.component';
 
 @NgModule({
   declarations: [
-    ActionComponent,
+    ActionComponent
   ],
   exports: [
     ActionComponent,
