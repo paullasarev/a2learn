@@ -1,8 +1,9 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
-import {Course, Courses} from '../../entities/course';
-import {CoursesService} from '../../services/courses-service';
+import { Course, Courses } from '../../entities/course';
+import { CoursesService } from '../../services/courses-service';
 
 @Component({
   selector: 'courses',
@@ -16,11 +17,14 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public courses: Course[];
   private isLoading: boolean = false;
 
-  constructor(private coursesService: CoursesService) {
+  constructor(
+    private coursesService: CoursesService,
+    private router: Router
+  ) {
   }
 
   public ngOnInit() {
-    this.coursesSubscription = this.coursesService.courses.subscribe(this.gotData.bind(this));
+    this.coursesSubscription = this.coursesService.list.subscribe(this.gotData.bind(this));
     this.askData();
   }
 
@@ -36,11 +40,15 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   private askData(filter?: string) {
     this.isLoading = true;
-    this.coursesService.ask(filter);
+    this.coursesService.askList(filter);
   }
 
   public onFind(filter: string) {
     this.askData(filter);
+  }
+
+  public onAdd(filter: string) {
+    this.router.navigate(['courses/new']);
   }
 
   public onDelete(course) {

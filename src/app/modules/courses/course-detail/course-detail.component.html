@@ -1,0 +1,29 @@
+<div class="course-detail">
+  <div *ngIf="!!id" class="course-detail__id">
+    {{id}}
+  </div>
+  <div class="course-detail__details">
+  <div class="form-group">
+      <div class="form-group__row">
+        <div class="form-group__label">Title</div>
+        <div class="form-group__value">{{course.title}}</div>
+      </div>
+      <div class="form-group__row">
+        <div class="form-group__label">Description</div>
+        <div class="form-group__value">{{course.description}}</div>
+      </div>
+      <div class="form-group__row">
+        <div class="form-group__label">Duration</div>
+        <div class="form-group__value">{{course.duration}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="course-detail__actions">
+    <div class="course-detail__action">
+      <action (action)="doSave()" title="Save"></action>
+    </div>
+    <div class="course-detail__action">
+      <action (action)="doCancel()" title="Cancel"></action>
+    </div>
+  </div>
+</div>

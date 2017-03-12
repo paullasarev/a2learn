@@ -1,0 +1,54 @@
+@import "../../../styles/variables";
+
+.course-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 16px;
+
+  &__id {
+  }
+
+  &__details {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__group {
+
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  &__action {
+    margin: 10px 5px 10px 5px;
+    min-width: 70px;
+  }
+}
+
+.form-group {
+  display: table;
+
+  &__row {
+    display: table-row;
+  }
+
+  &__label {
+    display: table-cell;
+    text-align: right;
+    padding-right: 20px;
+  }
+
+  &__value {
+    display: talbe-cell;
+    text-align: left;
+  }
+
+}

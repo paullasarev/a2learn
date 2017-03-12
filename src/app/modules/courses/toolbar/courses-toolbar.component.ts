@@ -13,6 +13,7 @@ import {Component, ViewEncapsulation, Output, EventEmitter} from '@angular/core'
 export class CoursesToolbarComponent {
   private filter: string = "string to search";
   @Output() public find = new EventEmitter();
+  @Output() public add = new EventEmitter();
 
   constructor() {
   }
@@ -24,5 +25,6 @@ export class CoursesToolbarComponent {
 
   public doAdd() {
     console.log('doAdd');
+    this.add.emit(this.filter);
   }
 }

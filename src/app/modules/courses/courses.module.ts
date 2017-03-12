@@ -9,12 +9,16 @@ import { routes } from './courses.routes';
 
 import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
+import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
     CoursesComponent,
     CourseComponent,
-    CoursesToolbarComponent
+    CourseDetailComponent,
+    CoursesToolbarComponent,
+    ErrorComponent
   ],
   exports: [
     CoursesComponent,
