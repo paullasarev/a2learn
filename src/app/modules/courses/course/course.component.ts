@@ -1,5 +1,6 @@
 import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
 import {Course} from '../../../entities/course';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'course',
@@ -12,11 +13,13 @@ export class CourseComponent {
   @Input() public course: Course;
   @Output() public onDelete = new EventEmitter();
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
   }
 
   public doEdit() {
-    console.log('doEdit', this.course);
+    this.router.navigate(['courses', this.course.id]);
   }
 
   public doDelete() {
