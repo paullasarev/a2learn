@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'login',
   template: require('./login.component.html'),
-  styles: [require('./login.styles.scss')],
+  styles: [
+    require('./login.styles.scss'),
+    require('../../styles/form.scss'),
+  ],
   providers: [],
   encapsulation: ViewEncapsulation.None
 })

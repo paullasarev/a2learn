@@ -1,0 +1,69 @@
+@import "./variables.scss";
+
+.form-group {
+  display: table;
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  width: 100%;
+
+  &__row {
+    display: table-row;
+  }
+
+  &__label {
+    display: table-cell;
+    vertical-align: top;
+    padding-top: 4px;
+    text-align: right;
+    padding-right: 20px;
+  }
+
+  &__value {
+    display: table-cell;
+    text-align: left;
+  }
+
+}
+
+.form-value {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: $input-font-size;
+
+  &--input {
+    height: $input-height;
+    outline: none;
+    border: 1px solid $color-input-border;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  &--input-number {
+    height: $input-height;
+    outline: none;
+    border: 1px solid $color-input-border;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 60px;
+  }
+
+  &--input-password {
+    height: $input-height;
+    outline: none;
+    border: 1px solid $color-input-border;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  &--textarea {
+    min-height: 6.3em;
+    border: 1px solid $color-input-border;
+    outline: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: -4px;
+    min-width: 100%;
+  }
+
+}

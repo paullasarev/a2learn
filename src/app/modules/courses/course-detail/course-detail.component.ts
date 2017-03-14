@@ -8,7 +8,10 @@ import {CoursesService} from '../../../services/courses-service';
 @Component({
   selector: 'course-detail',
   template: require('./course-detail.component.html'),
-  styles: [require('./course-detail.styles.scss')],
+  styles: [
+    require('./course-detail.styles.scss'),
+    require('../../../styles/form.scss'),
+  ],
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
