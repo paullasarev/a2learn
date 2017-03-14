@@ -17,6 +17,7 @@ import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
 import { BreadcrumbsComponent } from './app-header/breacrumbs/breadcrumbs.component';
 import { AppCommonModule } from '../app-common/app-common.module';
+import { LoginModule } from '../login/login.module';
 
 import { CoursesService } from '../../services/courses-service';
 
@@ -37,6 +38,7 @@ import { ROUTES } from './app.routes';
     RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
     CoursesModule,
     AppCommonModule,
+    LoginModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     CoursesService,

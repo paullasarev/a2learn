@@ -1,0 +1,28 @@
+<div class="login">
+  <div class="login__form">
+    <div class="form-group">
+      <div class="form-group__row">
+        <div class="form-group__label">User</div>
+        <div class="form-group__value">
+          <input type="text" class="form-value form-value--input" id="user"
+                 [(ngModel)]="user" name="user">
+        </div>
+      </div>
+      <div class="form-group__row">
+        <div class="form-group__label">Password</div>
+        <div class="form-group__value">
+          <input type="text" class="form-value form-value--input-password" id="password"
+                 [(ngModel)]="password" name="password">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="login__actions">
+    <div class="login__action">
+      <action (action)="doCancel()" title="Save"></action>
+    </div>
+    <div class="login__action">
+      <action (action)="doLogin()" title="Login"></action>
+    </div>
+  </div>
+</div>

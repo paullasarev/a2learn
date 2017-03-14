@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppCommonModule } from '../app-common/app-common.module';
-import { CoursesToolbarComponent } from './toolbar/courses-toolbar.component';
 import { FormsModule } from '@angular/forms';
 // import { ReactiveFormsModule } from '@angular/forms';
+
+import { AppCommonModule } from '../app-common/app-common.module';
+import { CoursesToolbarComponent } from './toolbar/courses-toolbar.component';
 
 import { routes } from './courses.routes';
 
