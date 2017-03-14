@@ -5,10 +5,10 @@ import { ErrorComponent } from './error/error.component';
 
 // Route Configuration
 const coursesRoutes: Routes = [
-  { path: 'courses', component: CoursesComponent },
-  { path: 'courses/new', component: CourseDetailComponent },
-  { path: 'courses/:id', component: CourseDetailComponent },
-  { path: 'error/:message', component: ErrorComponent },
+  { path: 'courses', component: CoursesComponent, data: {breadcrumb: 'courses'} },
+  { path: 'courses/new', component: CourseDetailComponent, data: {breadcrumb: 'new course'} },
+  { path: 'courses/:id', component: CourseDetailComponent, data: {breadcrumb: ['courses', (params)=>`course ${params.id}`]} },
+  { path: 'error/:message', component: ErrorComponent, data: {breadcrumb: 'error'} },
 ];
 
 export const routes = RouterModule.forChild(coursesRoutes);

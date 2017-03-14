@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute, Params } from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -12,7 +12,7 @@ import {CoursesService} from '../../../services/courses-service';
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
-export class CourseDetailComponent {
+export class CourseDetailComponent implements OnInit, OnDestroy {
   private courseSubscription: Subscription;
 
   public id: string = "";
@@ -36,7 +36,6 @@ export class CourseDetailComponent {
   }
 
   private onChangeRoute(params: Params) {
-    console.log('onChangeRoute', params)
     let id:string = params.id || "";
 
     if (!id || this.id !== id) {

@@ -6,7 +6,6 @@ import {Component, ViewEncapsulation} from '@angular/core';
   styles: [
     require('./app-header.styles.scss'),
     require('./logo.styles.scss'),
-    require('./breadcrumbs.styles.scss'),
     require('./user.styles.scss'),
   ],
   providers: [],

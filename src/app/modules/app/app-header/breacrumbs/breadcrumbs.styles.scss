@@ -1,0 +1,15 @@
+@import "../../../../styles/variables";
+
+.breadcrumbs {
+  font-size: 14px;
+
+  &__item {
+    display: inline-block;
+    &:not(:last-child):after {
+      display: inline-block;
+      margin-left: 2px;
+      margin-right: 2px;
+      content: '>';
+    }
+  }
+}

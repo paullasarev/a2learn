@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { NoContentComponent } from './no-content/no-content.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
+import { BreadcrumbsComponent } from './app-header/breacrumbs/breadcrumbs.component';
 import { AppCommonModule } from '../app-common/app-common.module';
 
 import { CoursesService } from '../../services/courses-service';
@@ -27,6 +28,7 @@ import { ROUTES } from './app.routes';
   declarations: [
     AppComponent,
     AppHeaderComponent,
+    BreadcrumbsComponent,
     AppFooterComponent,
     NoContentComponent
   ],
