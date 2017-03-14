@@ -5,11 +5,21 @@
 
   &__item {
     display: inline-block;
+
     &:not(:last-child):after {
       display: inline-block;
       margin-left: 2px;
       margin-right: 2px;
       content: '>';
+      color: initial;
+    }
+
+    &--link {
+      cursor: pointer;
+      color: $color-active-link;
+      &:hover {
+        color: darken($color-active-link, 20%);
+      }
     }
   }
 }

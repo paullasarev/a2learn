@@ -4,7 +4,7 @@ import "rxjs/add/operator/filter";
 
 interface IBreadcrumb {
   label: string;
-  params: Params;
+  route?: string;
 }
 
 @Component({
@@ -43,12 +43,10 @@ export class BreadcrumbsComponent implements OnInit {
       let snapshot = child.snapshot;
 
       if (snapshot.data.breadcrumb) {
-        let prop = snapshot.data.breadcrumb;
-        let breadcrumbs = Array.isArray(prop) ? prop : [prop];
-        for (let bc of breadcrumbs) {
+        for (let bc of snapshot.data.breadcrumb) {
           let breadcrumb: IBreadcrumb = {
-            label: typeof bc === "string" ? bc : bc(snapshot.params),
-            params: snapshot.params,
+            label: bc.expr ? bc.expr(snapshot.params) : bc.label,
+            route: bc.route,
           };
           this.breadcrumbs.push(breadcrumb);
         }
