@@ -5,16 +5,16 @@
   <div class="app-header__title">
     Learn
   </div>
-  <div  *ngIf="isAuth()" class="app-header__breadcrumbs">
+  <div  *ngIf="isLogged" class="app-header__breadcrumbs">
     <breadcrumbs></breadcrumbs>
   </div>
   <div class="app-header__user">
     <div class="user">
-      <div *ngIf="!isAuth()" class="user__login" routerLink="/login">Login</div>
-      <div *ngIf="isAuth()" class="user__info">
-        {{getUser()}}
+      <div *ngIf="!isLogged" class="user__login" routerLink="/login">Login</div>
+      <div *ngIf="isLogged" class="user__info">
+        {{username}}
       </div>
-      <div *ngIf="isAuth()" class="user__logoff" routerLink="/login">Logoff</div>
+      <div *ngIf="isLogged" class="user__logoff" routerLink="/login">Logoff</div>
     </div>
   </div>
 </div>

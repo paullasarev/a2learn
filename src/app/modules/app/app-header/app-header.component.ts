@@ -1,5 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
+import { User }  from "../../../entities/user";
 import { AuthService } from '../../../services/auth-service';
 
 @Component({
@@ -13,17 +15,30 @@ import { AuthService } from '../../../services/auth-service';
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
-export class AppHeaderComponent {
+export class AppHeaderComponent implements OnInit, OnDestroy{
+  private authSubscription: Subscription;
+
+  public username: string;
+  public isLogged: boolean;
+
   constructor(
-    private auth: AuthService
+    private authService: AuthService
   ) {
   }
 
-  public isAuth() {
-    return this.auth.isAuth();
+  public ngOnInit() {
+    this.authSubscription = this.authService.auth.subscribe(this.gotData.bind(this));
+    this.username = "";
+    this.isLogged = false;
+    this.authService.askAuth();
   }
 
-  public getUser() {
-    return this.auth.info().name;
+  public ngOnDestroy() {
+    this.authSubscription.unsubscribe();
+  }
+
+  private gotData(user: User) {
+    this.isLogged = !!user;
+    this.username = (user && user.name) || "";
   }
 }

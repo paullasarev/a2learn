@@ -1,6 +1,7 @@
-import { Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { User }  from "../../entities/user";
 import { AuthService } from '../../services/auth-service';
@@ -15,26 +16,40 @@ import { AuthService } from '../../services/auth-service';
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent implements OnInit {
-  @Output() public cancel = new EventEmitter();
+export class LoginComponent implements OnInit, OnDestroy {
+  private authSubscription: Subscription;
 
   public user: User;
 
   constructor(
     private router: Router,
     private location: Location,
-    private auth: AuthService
+    private authService: AuthService
   ) {
   }
 
   public ngOnInit() {
-    this.auth.logout();
+    this.authSubscription = this.authService.auth.subscribe(this.gotData.bind(this), this.gotError.bind(this));
+    this.authService.logout();
     this.user = new User("", "");
   }
 
+  public ngOnDestroy() {
+    this.authSubscription.unsubscribe();
+  }
+
+  private gotData(user: User) {
+    if (user) {
+      this.location.back();
+    }
+  }
+
+  private gotError(error) {
+    this.router.navigate(['error', (error && error.message)]);
+  }
+
   public doLogin() {
-    this.auth.login(this.user); //TODO: async result processing
-    this.location.back();
+    this.authService.login(this.user);
   }
 
   public doCancel() {
