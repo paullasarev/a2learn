@@ -1,6 +1,7 @@
 import {Component, ViewEncapsulation, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute, Params } from '@angular/router';
 import {Subscription} from 'rxjs';
+import {Location} from '@angular/common';
 
 import {Course} from '../../../entities/course';
 import {CoursesService} from '../../../services/courses-service';
@@ -24,6 +25,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private coursesService: CoursesService
     ) {
   }
@@ -70,7 +72,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   public doCancel() {
-    this.router.navigate(['courses']);
+    this.location.back();
   }
 
 }
