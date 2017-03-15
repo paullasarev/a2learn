@@ -8,4 +8,8 @@
     </div>
   </div>
   <div *ngIf="isLoading" class="courses__loading">Is loading...</div>
+  <confirm *ngIf="showDeleteConfirm"
+    [message]="'Do you really want to delete this course?'"
+    (ok)="doConfirmDelete()" (cancel)="doCancelDelete()"
+    ></confirm>
 </div>

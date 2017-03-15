@@ -1,0 +1,35 @@
+@import "../../../styles/variables.scss";
+
+.popup {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &__box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid $color-popup-border;
+    background-color: $color-popup-bg;
+    padding: 20px;
+  }
+
+  &__message {
+    margin: 0 0 10px 0;
+  }
+
+  &__actions {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  &__action {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-width: 50px;
+  }
+}

@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActionComponent } from './action/action.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
   declarations: [
-    ActionComponent
+    ActionComponent,
+    ConfirmComponent
   ],
   exports: [
     ActionComponent,
+    ConfirmComponent
   ],
   imports: [
     CommonModule,

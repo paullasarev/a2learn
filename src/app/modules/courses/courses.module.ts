@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppCommonModule } from '../app-common/app-common.module';
 import { CoursesToolbarComponent } from './toolbar/courses-toolbar.component';
@@ -27,7 +26,6 @@ import { ErrorComponent } from './error/error.component';
   imports: [
     routes,
     FormsModule,
-    // ReactiveFormsModule,
     CommonModule,
     AppCommonModule
   ],

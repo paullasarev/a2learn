@@ -15,6 +15,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   private coursesSubscription: Subscription;
   public courses: Course[];
   private isLoading: boolean = false;
+  public showDeleteConfirm: boolean = false;
+  private courseToDelete: Course;
 
   constructor(
     private coursesService: CoursesService,
@@ -51,6 +53,16 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   public onRemove(course) {
-    this.coursesService.removeItem(course.id);
+    this.courseToDelete = course;
+    this.showDeleteConfirm = true;
+  }
+
+  public doConfirmDelete() {
+    this.coursesService.removeItem(this.courseToDelete.id);
+    this.showDeleteConfirm = false;
+  }
+
+  public doCancelDelete() {
+    this.showDeleteConfirm = false;
   }
 }
