@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from "rxjs";
 import { User }  from "../entities/user";
+import { AuthUser }  from "../entities/auth-user";
 
 @Injectable()
 export class AuthService {
-  private user: User = new User('user', '');
+  private user: AuthUser = new AuthUser(new User('user', ''));
 
   private authRequests: Subject<User>;
-  private askRequests: Subject<User>;
-  private auth$: Observable<User>;
+  private askRequests: Subject<AuthUser>;
+  private auth$: Observable<AuthUser>;
 
   constructor() {
     this.authRequests = new Subject<User>();
-    this.askRequests = new Subject<User>();
+    this.askRequests = new Subject<AuthUser>();
     this.auth$ = Observable.merge(
       this.authRequests
-      .map(this.doAuth.bind(this))
-      .debounceTime(200),
+        .map(this.doAuth.bind(this))
+        .debounceTime(200),
       this.askRequests
     );
   }
@@ -27,7 +28,6 @@ export class AuthService {
 
   public logout() {
     console.log('AuthService.logout')
-    this.user = null;
     this.authRequests.next(null);
   }
 
@@ -36,16 +36,18 @@ export class AuthService {
     this.authRequests.next(user);
   }
 
-  public doAuth(user: User) {
-    if (user && user.name == 'e') {
-      throw new Error("wrong credentials");
+  public doAuth(user: User): AuthUser {
+    this.user = new AuthUser(user);
+
+    if (user && user.name === 'e') {
+      this.user.error = new Error("wrong credentials");
     }
 
-    this.user = user;
-    return user;
+    return this.user;
   }
 
-  public get auth() : Observable<User> {
+  public get auth() : Observable<AuthUser> {
     return this.auth$;
   }
+
 }

@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { User }  from "../../entities/user";
+import { AuthUser }  from "../../entities/auth-user";
 import { AuthService } from '../../services/auth-service';
 
 @Component({
@@ -38,8 +39,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authSubscription.unsubscribe();
   }
 
-  private gotData(user: User) {
-    if (user) {
+  private gotData(auth: AuthUser) {
+    let error = auth.error;
+    if (error) {
+      this.router.navigate(['error', (error && error.message)]);
+    } else if (auth.user) {
       this.location.back();
     }
   }

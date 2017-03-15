@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { User }  from "../../../entities/user";
+import { AuthUser }  from "../../../entities/auth-user";
 import { AuthService } from '../../../services/auth-service';
 
 @Component({
@@ -15,11 +15,11 @@ import { AuthService } from '../../../services/auth-service';
   providers: [],
   encapsulation: ViewEncapsulation.None
 })
-export class AppHeaderComponent implements OnInit, OnDestroy{
+export class AppHeaderComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription;
 
-  public username: string;
-  public isLogged: boolean;
+  public username: string = "";
+  public isLogged: boolean = false;
 
   constructor(
     private authService: AuthService
@@ -28,8 +28,6 @@ export class AppHeaderComponent implements OnInit, OnDestroy{
 
   public ngOnInit() {
     this.authSubscription = this.authService.auth.subscribe(this.gotData.bind(this));
-    this.username = "";
-    this.isLogged = false;
     this.authService.askAuth();
   }
 
@@ -37,8 +35,8 @@ export class AppHeaderComponent implements OnInit, OnDestroy{
     this.authSubscription.unsubscribe();
   }
 
-  private gotData(user: User) {
-    this.isLogged = !!user;
-    this.username = (user && user.name) || "";
+  private gotData(auth: AuthUser) {
+    this.isLogged = auth.isLogged;
+    this.username = auth.username;
   }
 }
