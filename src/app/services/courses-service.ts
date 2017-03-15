@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs";
-import {find} from 'lodash';
+import {find, remove} from 'lodash';
 
 import {Course, Courses}  from "../entities/course";
 
 @Injectable()
 export class CoursesService {
   private data: Courses;
+  private lastId: number;
 
   private listRequests: Subject<string>;
   private list$: Observable<Courses>;
@@ -15,10 +16,13 @@ export class CoursesService {
   private item$: Observable<Course>;
 
   constructor() {
+    console.log('CoursesService.constructor');
     this.data = [
       new Course('1', 'javascript', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore fuga tenetur illum, reprehenderit possimus architecto optio maxime dolore iure, nobis, provident. Repellat quod cupiditate doloremque esse natus vero delectus dolores!', 600),
       new Course('2', 'CSS', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora repellendus deleniti temporibus nesciunt culpa recusandae excepturi mollitia minima, provident commodi maxime illum voluptates architecto et nobis corrupti. Optio esse, quod.', 300)
     ];
+
+    this.lastId = 100;
 
     this.listRequests = new Subject<string>();
     this.list$ = this.listRequests
@@ -33,7 +37,6 @@ export class CoursesService {
   }
 
   public getList(filter) {
-    console.log('CoursesService.getList', filter)
     return Observable.of(this.data)
       .delay(700);
   }
@@ -46,9 +49,7 @@ export class CoursesService {
     return this.list$;
   }
 
-
   public getItem(id) {
-    console.log('CoursesService.getItem', id)
     if (!id) {
       return Observable.of(new Course("", "Course", "New course", 120));
     }
@@ -63,11 +64,36 @@ export class CoursesService {
   }
 
   public askItem(id: string) : void {
-    console.log('CoursesService.askItem', id)
     this.itemRequests.next(id);
   }
 
   public get item() : Observable<Course> {
     return this.item$;
   }
+
+  public removeItem(id: string) : void {
+    let item = find(this.data, {id:id});
+    if (!item) {
+      throw new Error(`no course with id=${id}`);
+    }
+    remove(this.data, {id:id});
+    this.listRequests.next("");    
+  }
+
+  public saveItem(course: Course) {
+    if (!course.id) {
+      this.lastId++;
+      course.id = this.lastId.toString();
+    }
+
+    let item = find(this.data, {id: course.id});
+    if (item) {
+      Object.assign(item, course);
+    } else {
+      this.data.push(course);
+      this.listRequests.next("");    
+    }
+
+  }
+
 }

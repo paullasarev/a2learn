@@ -8,7 +8,6 @@ import { CoursesService } from '../../services/courses-service';
 @Component({
   selector: 'courses',
   encapsulation: ViewEncapsulation.None,
-  providers: [CoursesService],
   styles: [require('./courses.styles.scss')],
   template: require('./courses.template.html')
 })
@@ -51,7 +50,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.router.navigate(['courses/new']);
   }
 
-  public onDelete(course) {
-    console.log('CoursesComponent.onDelete', course);
+  public onRemove(course) {
+    this.coursesService.removeItem(course.id);
   }
 }

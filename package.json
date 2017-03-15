@@ -4,8 +4,8 @@
   "description": "angular 2 learn project",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
     "start": "webpack-dev-server",
+    "serve": "webpack-dev-server",
     "build": "webpack"
   },
   "repository": {

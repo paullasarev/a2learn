@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CourseComponent {
   @Input() public course: Course;
-  @Output() public onDelete = new EventEmitter();
+  @Output() public remove = new EventEmitter();
 
   constructor(
     private router: Router
@@ -23,8 +23,7 @@ export class CourseComponent {
   }
 
   public doDelete() {
-    console.log('doDelete', this.course);
-    this.onDelete.emit(this.course);
+    this.remove.emit(this.course);
   }
 
   public calculateStatusClass(status): string {

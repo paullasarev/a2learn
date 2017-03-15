@@ -50,7 +50,6 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   private askCourse() {
-    console.log('askCourse', this.id);
     this.coursesService.askItem(this.id);
   }
 
@@ -67,11 +66,10 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   public doSave() {
-    console.log('doSave', this.course);
+    this.coursesService.saveItem(this.course);
   }
 
   public doCancel() {
-    console.log('doCancel', this.course);
     this.router.navigate(['courses']);
   }
 
