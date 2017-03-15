@@ -1,4 +1,6 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +14,16 @@ import {Component, ViewEncapsulation} from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AppHeaderComponent {
-  constructor() {
+  constructor(
+    private auth: AuthService
+  ) {
+  }
+
+  public isAuth() {
+    return this.auth.isAuth();
+  }
+
+  public getUser() {
+    return this.auth.info().name;
   }
 }

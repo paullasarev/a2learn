@@ -1,13 +1,5 @@
-import {
-  NgModule,
-  ApplicationRef
-} from '@angular/core';
-
-import {
-  RouterModule,
-  PreloadAllModules
-} from '@angular/router';
-
+import { NgModule, ApplicationRef } from '@angular/core';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { CoursesModule } from '../courses/courses.module';
@@ -20,9 +12,9 @@ import { AppCommonModule } from '../app-common/app-common.module';
 import { LoginModule } from '../login/login.module';
 
 import { CoursesService } from '../../services/courses-service';
+import { AuthService } from '../../services/auth-service';
 
 import { ROUTES } from './app.routes';
-
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -33,19 +25,19 @@ import { ROUTES } from './app.routes';
     AppFooterComponent,
     NoContentComponent
   ],
-  imports: [ // import Angular's modules
+  imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
     CoursesModule,
     AppCommonModule,
-    LoginModule,
+    LoginModule
   ],
-  providers: [ // expose our Services and Providers into Angular's dependency injection
+  providers: [
     CoursesService,
+    AuthService
   ]
 })
 export class AppModule {
-
   constructor(public appRef: ApplicationRef) {
   }
 }

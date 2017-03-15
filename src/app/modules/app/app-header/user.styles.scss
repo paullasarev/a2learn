@@ -2,10 +2,12 @@
 
 .user {
   font-size: 14px;
+  text-align: right;
 
   &__info {
   }
-  &__logoff {
+
+  &__logoff, &__login {
     color: $color-active-link;
     text-align: right;
     cursor: pointer;
