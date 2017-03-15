@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit() {
-    console.log('LoginComponent.ngOnInit')
     this.auth.logout();
     this.user = new User("", "");
   }

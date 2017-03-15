@@ -10,12 +10,12 @@ export class AuthService {
   }
 
   public logout() {
-    console.log('AuthServce.logout')
+    console.log('AuthService.logout')
     this.user = null;
   }
 
   public login(user: User) {
-    console.log('AuthServce.login', user.name)
+    console.log('AuthService.login', user.name)
     this.user = user;
   }
 
