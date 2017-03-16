@@ -11,7 +11,6 @@ import {CoursesService} from '../../../services/courses-service';
   template: require('./course-detail.component.html'),
   styles: [
     require('./course-detail.styles.scss'),
-    require('../../../styles/form.scss'),
   ],
   providers: [],
   encapsulation: ViewEncapsulation.None
@@ -33,7 +32,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.courseSubscription = this.coursesService.item.subscribe(
       this.gotData.bind(this), this.gotError.bind(this));
-    this.route.params.forEach(this.onChangeRoute.bind(this));
+    this.route.params.subscribe(this.onChangeRoute.bind(this));
   }
 
   public ngOnDestroy() {
@@ -56,8 +55,6 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   private gotData(course: Course) {
-    console.log('CourseDetailComponent.gotData', this.id, course);
-
     if (course.id == this.id) {
       this.course = course;
     }

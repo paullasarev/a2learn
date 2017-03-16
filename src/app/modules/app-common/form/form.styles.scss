@@ -1,4 +1,9 @@
-@import "./variables.scss";
+@import "../../../styles/variables.scss";
+
+.form {
+  display: block;
+  height: 100%;
+}
 
 .form-group {
   display: table;

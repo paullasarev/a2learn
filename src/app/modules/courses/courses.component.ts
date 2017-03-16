@@ -34,7 +34,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   private gotData(courses: Courses) {
-    console.log('CoursesComponent.gotData');
     this.isLoading = false;
     this.courses = courses;
   }

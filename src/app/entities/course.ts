@@ -14,11 +14,11 @@ export class Course {
     description?: string,
     duration?: number,
     creatingDate?: Date) {
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.duration = duration;
-    this.creatingDate = creatingDate ? creatingDate : new Date();
+    this.id = id || "";
+    this.title = title || "";
+    this.description = description || "";
+    this.duration = duration || 0;
+    this.creatingDate = creatingDate || new Date();
   }
 }
 

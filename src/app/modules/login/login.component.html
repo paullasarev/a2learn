@@ -1,21 +1,9 @@
 <div class="login">
   <div class="login__form">
-    <div class="form-group">
-      <div class="form-group__row">
-        <div class="form-group__label">User</div>
-        <div class="form-group__value">
-          <input type="text" class="form-value form-value--input" id="name"
-                 [(ngModel)]="user.name" name="name">
-        </div>
-      </div>
-      <div class="form-group__row">
-        <div class="form-group__label">Password</div>
-        <div class="form-group__value">
-          <input type="password" class="form-value form-value--input-password" id="password"
-                 [(ngModel)]="user.password" name="password">
-        </div>
-      </div>
-    </div>
+    <form-group>
+      <form-input-text label="User" [(value)]="user.name"></form-input-text>
+      <form-input-password label="Password" [(value)]="user.password"></form-input-password>
+    </form-group>
   </div>
   <div class="login__actions">
     <div class="login__action">

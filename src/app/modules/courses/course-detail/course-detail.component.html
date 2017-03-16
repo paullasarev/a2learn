@@ -3,31 +3,13 @@
     {{id}}
   </div>
   <div class="course-detail__details">
-  <div class="form-group">
-      <div class="form-group__row">
-        <div class="form-group__label">Title</div>
-        <div class="form-group__value">
-          <input type="text" class="form-value form-value--input" id="title"
-            [(ngModel)]="course.title" name="title">
-        </div>
-      </div>
-      <div class="form-group__row">
-        <div class="form-group__label">Description</div>
-        <div class="form-group__value">
-          <textarea class="form-value form-value--textarea" id="description"
-            [(ngModel)]="course.description" name="description">
-          </textarea>
-        </div>
-      </div>
-      <div class="form-group__row">
-        <div class="form-group__label">Duration</div>
-        <div class="form-group__value">
-          <input type="text" class="form-value form-value--input-number" id="duration"
-            [(ngModel)]="course.duration" name="duration">
-        </div>
-      </div>
-    </div>
+    <form-group>
+      <form-input-text label="Title" [(value)]="course.title"></form-input-text>
+      <form-input-textarea label="Description" [(value)]="course.description"></form-input-textarea>
+      <form-input-number label="Duration" [(value)]="course.duration"></form-input-number>
+    </form-group>
   </div>
+
   <div class="course-detail__actions">
     <div class="course-detail__action">
       <action (action)="doSave()" title="Save"></action>
