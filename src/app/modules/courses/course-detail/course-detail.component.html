@@ -6,7 +6,9 @@
     <form-group>
       <form-input-text label="Title" [(value)]="course.title"></form-input-text>
       <form-input-textarea label="Description" [(value)]="course.description"></form-input-textarea>
-      <form-input-number label="Duration" [(value)]="course.duration"></form-input-number>
+      <form-input-number label="Duration" [(value)]="course.duration"
+         [tip]="course.duration|duration">
+      </form-input-number>
     </form-group>
   </div>
 

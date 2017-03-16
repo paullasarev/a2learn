@@ -96,6 +96,7 @@ export class FormInputPasswordComponent extends FormInputTextComponent {
       <div class="form-group__value">
         <input type="text" class="form-value form-value--input-number"
                [value]="value" (input)="onChange($event)">
+        <div *ngIf="!!tip" class="form-value-tip">{{tip}}</div>
       </div>
 `,
   host: {
@@ -108,6 +109,7 @@ export class FormInputPasswordComponent extends FormInputTextComponent {
   encapsulation: ViewEncapsulation.None
 })
 export class FormInputNumberComponent extends FormInputTextComponent {
+  @Input() public tip: string = "";
   constructor() {
     super();
   }
