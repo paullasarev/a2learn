@@ -10,6 +10,7 @@ import {
   FormInputNumberComponent,
   FormInputTextareaComponent,
 } from './form/form.component';
+import { DurationPipe } from './pipes/duration.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {
     FormInputPasswordComponent,
     FormInputNumberComponent,
     FormInputTextareaComponent,
+    DurationPipe,
   ],
   exports: [
     ActionComponent,
@@ -32,6 +34,7 @@ import {
     FormInputPasswordComponent,
     FormInputNumberComponent,
     FormInputTextareaComponent,
+    DurationPipe,
   ],
   imports: [
     CommonModule,
