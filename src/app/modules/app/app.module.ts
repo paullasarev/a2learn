@@ -13,6 +13,7 @@ import { LoginModule } from '../login/login.module';
 
 import { CoursesService } from '../../services/courses-service';
 import { AuthService } from '../../services/auth-service';
+import { StorageService } from '../../services/storage-service';
 
 import { ROUTES } from './app.routes';
 
@@ -34,7 +35,8 @@ import { ROUTES } from './app.routes';
   ],
   providers: [
     CoursesService,
-    AuthService
+    AuthService,
+    StorageService
   ]
 })
 export class AppModule {
