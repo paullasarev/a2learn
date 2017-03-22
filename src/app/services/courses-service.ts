@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Observable, Subject} from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from "rxjs";
 import {find, remove} from 'lodash';
 
-import {Course, Courses}  from "../entities/course";
+import { Course, Courses }  from "../entities/course";
 import { LoadBlockService } from '../services/load-block';
 
 @Injectable()

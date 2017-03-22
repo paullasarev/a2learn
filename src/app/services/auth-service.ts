@@ -3,6 +3,7 @@ import { Observable, Subject } from "rxjs";
 import { User }  from "../entities/user";
 import { AuthUser }  from "../entities/auth-user";
 import { StorageService } from "./storage-service";
+import { LoadBlockService } from '../services/load-block';
 
 const STORAGE_KEY = 'auth';
 
@@ -14,12 +15,18 @@ export class AuthService {
   private askRequests: Subject<AuthUser>;
   private auth$: Observable<AuthUser>;
 
-  constructor(private storage: StorageService) {
+  constructor(
+    private loadBlockService: LoadBlockService,
+    private storage: StorageService
+  ) {
     this.authRequests = new Subject<User>();
     this.askRequests = new Subject<AuthUser>();
     this.auth$ = Observable.merge(
       this.authRequests
+        .do(()=>{this.loadBlockService.show()})
+        .delay(300)
         .map(this.doAuth.bind(this))
+        .do(()=>{this.loadBlockService.hide()})
         .debounceTime(200),
       this.askRequests
     );

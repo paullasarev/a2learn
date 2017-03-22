@@ -11,7 +11,10 @@ import { LoadBlockService } from '../../../services/load-block';
 @Component({
   selector: 'load-block',
   template: `
-      <div *ngIf="show" [@showAnimation]="show" class="load-block__paper">
+      <div *ngIf="show" [@showAnimation]="show" 
+        (@showAnimation.start)="animationStarted($event)"
+        (@showAnimation.done)="animationDone($event)"
+                class="load-block__paper">
         <div class="load-block__dots"></div>
       </div>
 `,
@@ -37,6 +40,7 @@ import { LoadBlockService } from '../../../services/load-block';
 export class LoadBlockComponent implements OnInit, OnDestroy{
   private subscription: Subscription;
 
+  public inAnimation: boolean = false;
   public show: boolean = false;
 
   constructor(
@@ -54,8 +58,20 @@ export class LoadBlockComponent implements OnInit, OnDestroy{
   }
 
   private gotData(show) {
-    this.show = show;
+    this.show = show ? (show && !this.inAnimation) : show;
     this.changeDetectorRef.markForCheck();
+  }
+
+  private animationStarted(event) {
+    if (event.toState === true) {
+      this.inAnimation = true;
+    }
+  }
+
+  private animationDone(event) {
+    if (event.fromState === true) {
+      this.inAnimation = false;
+    }
   }
 
 }
