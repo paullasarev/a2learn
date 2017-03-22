@@ -1,0 +1,97 @@
+@import "../../../styles/variables.scss";
+
+$load-block-loader-color: #dde2e7;
+$load-block-loader-highlight-color: #6b9dc8;
+$load-block-loader-height: 1.5em;
+$load-block-loader-segment-width: 0.9em;
+$load-block-loader-spacing: 0.7em;
+$load-block-period: 1000ms; //2000ms
+$load-block-delay-1: 150ms;
+$load-block-delay-2: 300ms;
+$load-block-delay-3: 450ms;
+
+@keyframes spinner-loader {
+  0% {
+    background: $load-block-loader-color;
+  }
+  10% {
+    background: $load-block-loader-highlight-color;
+  }
+  40% {
+    background: $load-block-loader-color;
+  }
+}
+
+.load-block {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .5);
+  opacity: 1;
+
+
+  &__paper {
+    margin:auto;
+    width: ($load-block-loader-segment-width*3 + $load-block-loader-spacing*2);
+    background-color: transparent;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  &__dots {
+    background: $load-block-loader-color;
+    display: inline-block;
+    position: relative;
+    text-indent: -9999px;
+
+    //css circle
+    width: $load-block-loader-segment-width;
+    height: $load-block-loader-segment-width;
+    border-radius: 50%;
+
+    margin: 0 ($load-block-loader-segment-width + $load-block-loader-spacing);
+
+    animation: spinner-loader $load-block-period $load-block-delay-2 infinite ease-out;
+
+    &:before, &:after {
+      background: $load-block-loader-color;
+      content: '\x200B';
+      display: inline-block;
+
+      width: $load-block-loader-segment-width;
+      height: $load-block-loader-segment-width;
+      border-radius: 50%;
+
+      position: absolute;
+      top: 0;
+    }
+
+    &:before {
+      animation: spinner-loader $load-block-period $load-block-delay-1 infinite ease-out;
+      left: -($load-block-loader-segment-width + $load-block-loader-spacing);
+    }
+
+    &:after {
+      animation: spinner-loader $load-block-period $load-block-delay-3 infinite ease-out;
+      right: -($load-block-loader-segment-width + $load-block-loader-spacing);
+    }
+  }
+}
+
+// enter/leave animations for 'spinner' base
+.load-block-enter {
+  opacity: 0.0;
+}
+.load-block-enter.load-block-enter-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.load-block-leave {
+  opacity: 1;
+}
+.load-block-leave.spinner-leave-active {
+  opacity: 0.0;
+  transition: opacity .5s ease-in;
+}

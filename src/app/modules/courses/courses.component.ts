@@ -25,7 +25,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
   ) {
   }
 

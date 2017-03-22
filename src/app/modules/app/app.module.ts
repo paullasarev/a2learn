@@ -8,12 +8,14 @@ import { NoContentComponent } from './no-content/no-content.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
 import { BreadcrumbsComponent } from './app-header/breacrumbs/breadcrumbs.component';
+import { LoadBlockComponent } from './load-block/load-block.component';
 import { AppCommonModule } from '../app-common/app-common.module';
 import { LoginModule } from '../login/login.module';
 
 import { CoursesService } from '../../services/courses-service';
 import { AuthService } from '../../services/auth-service';
 import { StorageService } from '../../services/storage-service';
+import { LoadBlockService } from '../../services/load-block';
 
 import { ROUTES } from './app.routes';
 
@@ -24,6 +26,7 @@ import { ROUTES } from './app.routes';
     AppHeaderComponent,
     BreadcrumbsComponent,
     AppFooterComponent,
+    LoadBlockComponent,
     NoContentComponent
   ],
   imports: [
@@ -36,7 +39,8 @@ import { ROUTES } from './app.routes';
   providers: [
     CoursesService,
     AuthService,
-    StorageService
+    StorageService,
+    LoadBlockService
   ]
 })
 export class AppModule {

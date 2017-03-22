@@ -3,6 +3,7 @@ import {Observable, Subject} from "rxjs";
 import {find, remove} from 'lodash';
 
 import {Course, Courses}  from "../entities/course";
+import { LoadBlockService } from '../services/load-block';
 
 @Injectable()
 export class CoursesService {
@@ -15,7 +16,9 @@ export class CoursesService {
   private itemRequests: Subject<string>;
   private item$: Observable<Course>;
 
-  constructor() {
+  constructor(
+    private loadBlockService: LoadBlockService,
+  ) {
     this.data = [
       new Course('1', 'javascript', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore fuga tenetur illum, reprehenderit possimus architecto optio maxime dolore iure, nobis, provident. Repellat quod cupiditate doloremque esse natus vero delectus dolores!', 600),
       new Course('2', 'CSS', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora repellendus deleniti temporibus nesciunt culpa recusandae excepturi mollitia minima, provident commodi maxime illum voluptates architecto et nobis corrupti. Optio esse, quod.', 300)
@@ -37,7 +40,10 @@ export class CoursesService {
 
   public getList(filter) {
     return Observable.of(this.data)
-      .delay(700);
+      .do(()=>{this.loadBlockService.show()})
+      .delay(700)
+      .do(()=>{this.loadBlockService.hide()})
+    ;
   }
 
   public askList(filter?: string) : void {
@@ -59,7 +65,10 @@ export class CoursesService {
     }
 
     return Observable.of(item)
-      .delay(600);
+      .do(()=>{this.loadBlockService.show()})
+      .delay(600)
+      .do(()=>{this.loadBlockService.hide()})
+    ;
   }
 
   public askItem(id: string) : void {
@@ -88,11 +97,11 @@ export class CoursesService {
     let item = find(this.data, {id: course.id});
     if (item) {
       Object.assign(item, course);
+      this.askItem(course.id);
     } else {
       this.data.push(course);
-      this.listRequests.next("");
     }
-
+    this.askList("");
   }
 
 }
