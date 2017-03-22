@@ -2,9 +2,9 @@
 
 $load-block-loader-color: #dde2e7;
 $load-block-loader-highlight-color: #6b9dc8;
-$load-block-loader-height: 1.5em;
-$load-block-loader-segment-width: 0.9em;
-$load-block-loader-spacing: 0.7em;
+$load-block-loader-height: 30px;
+$load-block-loader-segment-width: 15px;
+$load-block-loader-spacing: 12px;
 $load-block-period: 1000ms; //2000ms
 $load-block-delay-1: 150ms;
 $load-block-delay-2: 300ms;
@@ -35,8 +35,7 @@ $load-block-delay-3: 450ms;
     margin:auto;
     width: ($load-block-loader-segment-width*3 + $load-block-loader-spacing*2);
     background-color: transparent;
-    padding-top: 20px;
-    padding-bottom: 10px;
+    height: $load-block-loader-height;
   }
 
   &__dots {
@@ -51,6 +50,7 @@ $load-block-delay-3: 450ms;
     border-radius: 50%;
 
     margin: 0 ($load-block-loader-segment-width + $load-block-loader-spacing);
+    margin-top: ($load-block-loader-height - $load-block-loader-segment-width) / 2;
 
     animation: spinner-loader $load-block-period $load-block-delay-2 infinite ease-out;
 

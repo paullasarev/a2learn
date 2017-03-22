@@ -1,7 +1,8 @@
 import {
   Component, ViewEncapsulation,
   OnInit, OnDestroy,
-  ChangeDetectionStrategy, ChangeDetectorRef
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  trigger, transition, style, animate, state
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -10,7 +11,7 @@ import { LoadBlockService } from '../../../services/load-block';
 @Component({
   selector: 'load-block',
   template: `
-      <div *ngIf="show" class="load-block__paper">
+      <div *ngIf="show" [@showAnimation]="show" class="load-block__paper">
         <div class="load-block__dots"></div>
       </div>
 `,
@@ -20,7 +21,18 @@ import { LoadBlockService } from '../../../services/load-block';
   host: {class: 'load-block'},
   providers: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('showAnimation', [
+      transition('void => *', [
+        style({opacity: 0}),
+        animate(600, style({opacity: 1}))
+      ]),
+      transition('* => void', [
+        animate(600, style({opacity: 0}))
+      ])
+    ])
+  ]
 })
 export class LoadBlockComponent implements OnInit, OnDestroy{
   private subscription: Subscription;
