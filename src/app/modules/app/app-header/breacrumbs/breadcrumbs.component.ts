@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, OnInit} from '@angular/core';
+import {Component, ViewEncapsulation, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Params } from "@angular/router";
 import "rxjs/add/operator/filter";
 
@@ -14,6 +14,7 @@ interface IBreadcrumb {
     require('./breadcrumbs.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class BreadcrumbsComponent implements OnInit {
@@ -21,6 +22,7 @@ export class BreadcrumbsComponent implements OnInit {
   private breadcrumbs: IBreadcrumb[]=[];
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
@@ -32,7 +34,7 @@ export class BreadcrumbsComponent implements OnInit {
       for (let root of this.activatedRoute.pathFromRoot) {
         this.getBreadcrumbs(root);
       }
-      // console.log('NavigationEnd', this.breadcrumbs)
+      this.changeDetectorRef.markForCheck();
     });
   }
 

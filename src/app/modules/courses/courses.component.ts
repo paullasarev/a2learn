@@ -1,4 +1,7 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component, ViewEncapsulation, OnInit, OnDestroy,
+  ChangeDetectionStrategy, ChangeDetectorRef
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -8,6 +11,7 @@ import { CoursesService } from '../../services/courses-service';
 @Component({
   selector: 'courses',
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [require('./courses.styles.scss')],
   template: require('./courses.template.html')
 })
@@ -19,8 +23,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
   private courseToDelete: Course;
 
   constructor(
-    private coursesService: CoursesService,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
+    private coursesService: CoursesService
   ) {
   }
 
@@ -36,6 +41,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   private gotData(courses: Courses) {
     this.isLoading = false;
     this.courses = courses;
+    this.changeDetectorRef.markForCheck();
   }
 
   private askData(filter?: string) {
@@ -54,14 +60,17 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public onRemove(course) {
     this.courseToDelete = course;
     this.showDeleteConfirm = true;
+    this.changeDetectorRef.markForCheck();
   }
 
   public doConfirmDelete() {
     this.coursesService.removeItem(this.courseToDelete.id);
     this.showDeleteConfirm = false;
+    this.changeDetectorRef.markForCheck();
   }
 
   public doCancelDelete() {
     this.showDeleteConfirm = false;
+    this.changeDetectorRef.markForCheck();
   }
 }

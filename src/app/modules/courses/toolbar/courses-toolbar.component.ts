@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
+import {Component, ViewEncapsulation, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,6 +8,7 @@ import {Component, ViewEncapsulation, Output, EventEmitter} from '@angular/core'
     require('./courses-search.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class CoursesToolbarComponent {

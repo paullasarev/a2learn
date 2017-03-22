@@ -1,4 +1,7 @@
-import { Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component, ViewEncapsulation,OnInit, OnDestroy,
+  ChangeDetectionStrategy, ChangeDetectorRef
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -14,6 +17,7 @@ import { AuthService } from '../../services/auth-service';
     require('./login.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit, OnDestroy {
@@ -24,6 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private location: Location,
+    private changeDetectorRef: ChangeDetectorRef,
     private authService: AuthService
   ) {
   }
@@ -39,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private gotData(auth: AuthUser) {
+    this.changeDetectorRef.markForCheck();
     let error = auth.error;
     if (error) {
       this.router.navigate(['error', (error && error.message)]);
@@ -48,6 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private gotError(error) {
+    this.changeDetectorRef.markForCheck();
     this.router.navigate(['error', (error && error.message)]);
   }
 

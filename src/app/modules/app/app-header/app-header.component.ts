@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AuthUser }  from "../../../entities/auth-user";
@@ -13,6 +13,7 @@ import { AuthService } from '../../../services/auth-service';
     require('./user.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class AppHeaderComponent implements OnInit, OnDestroy {
@@ -22,6 +23,7 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   public isLogged: boolean = false;
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private authService: AuthService
   ) {
   }
@@ -38,5 +40,6 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   private gotData(auth: AuthUser) {
     this.isLogged = auth.isLogged;
     this.username = auth.username;
+    this.changeDetectorRef.markForCheck();
   }
 }

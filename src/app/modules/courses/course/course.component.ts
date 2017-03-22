@@ -1,4 +1,7 @@
-import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
+import {
+  Component, ViewEncapsulation, Input, Output, EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {Course} from '../../../entities/course';
 import { Router } from '@angular/router';
 
@@ -7,6 +10,7 @@ import { Router } from '@angular/router';
   template: require('./course.component.html'),
   styles: [require('./course.styles.scss')],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class CourseComponent {

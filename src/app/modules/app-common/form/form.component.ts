@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
+import {Component, ViewEncapsulation, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'form',
@@ -24,6 +24,7 @@ export class FormComponent {
     require('./form.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class FormGroupComponent {
@@ -47,6 +48,7 @@ export class FormGroupComponent {
     class: 'form-group__row'
   },
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class FormInputTextComponent {
@@ -81,6 +83,7 @@ export class FormInputTextComponent {
     require('./form.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class FormInputPasswordComponent extends FormInputTextComponent {
@@ -106,6 +109,7 @@ export class FormInputPasswordComponent extends FormInputTextComponent {
     require('./form.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class FormInputNumberComponent extends FormInputTextComponent {
@@ -132,6 +136,7 @@ export class FormInputNumberComponent extends FormInputTextComponent {
     require('./form.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class FormInputTextareaComponent extends FormInputTextComponent {

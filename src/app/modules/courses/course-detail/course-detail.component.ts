@@ -1,4 +1,7 @@
-import {Component, ViewEncapsulation, OnInit, OnDestroy} from '@angular/core';
+import {
+  Component, ViewEncapsulation, OnInit, OnDestroy,
+  ChangeDetectionStrategy, ChangeDetectorRef
+} from '@angular/core';
 import {Router, ActivatedRoute, Params } from '@angular/router';
 import {Subscription} from 'rxjs';
 import {Location} from '@angular/common';
@@ -13,6 +16,7 @@ import {CoursesService} from '../../../services/courses-service';
     require('./course-detail.styles.scss'),
   ],
   providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class CourseDetailComponent implements OnInit, OnDestroy {
@@ -24,6 +28,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
     private location: Location,
     private coursesService: CoursesService
     ) {
@@ -58,9 +63,11 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     if (course.id == this.id) {
       this.course = course;
     }
+    this.changeDetectorRef.markForCheck();
   }
 
   private gotError(error) {
+    this.changeDetectorRef.markForCheck();
     this.router.navigate(['error', (error && error.message)], {skipLocationChange:true});
   }
 
