@@ -100,6 +100,7 @@ export class CoursesService {
       this.askItem(course.id);
     } else {
       this.data.push(course);
+      this.askItem(course.id);
     }
     this.askList("");
   }
