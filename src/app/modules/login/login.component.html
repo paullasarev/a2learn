@@ -1,8 +1,8 @@
 <div class="login">
   <div class="login__form">
     <form-group>
-      <form-input-text label="User" [(value)]="user.name"></form-input-text>
-      <form-input-password label="Password" [(value)]="user.password"></form-input-password>
+      <form-input-text label="User" [value]="user.name" (valueChange)="onUserNameChange($event)"></form-input-text>
+      <form-input-password label="Password" [value]="user.password" (valueChange)="onUserPasswordChange($event)"></form-input-password>
     </form-group>
   </div>
   <div class="login__actions">

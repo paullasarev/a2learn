@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { User }  from "../../entities/user";
 import { AuthUser }  from "../../entities/auth-user";
 import { AuthService } from '../../services/auth-service';
+import { LoadBlockService } from '../../services/load-block';
 
 @Component({
   selector: 'login',
@@ -22,6 +23,8 @@ import { AuthService } from '../../services/auth-service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription;
+  private loadSubscription: Subscription;
+  private loadIsActive: boolean = false;
 
   public user: User;
 
@@ -29,18 +32,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location,
     private changeDetectorRef: ChangeDetectorRef,
+    private loadBlockService: LoadBlockService,
     private authService: AuthService
   ) {
   }
 
   public ngOnInit() {
     this.authSubscription = this.authService.auth.subscribe(this.gotData.bind(this), this.gotError.bind(this));
+    this.loadSubscription = this.loadBlockService.load.subscribe(this.gotLoadData.bind(this));
     this.authService.logout();
     this.user = new User("", "");
   }
 
   public ngOnDestroy() {
     this.authSubscription.unsubscribe();
+    this.loadSubscription.unsubscribe();
+  }
+
+  private gotLoadData(active) {
+    this.loadIsActive = active;
   }
 
   private gotData(auth: AuthUser) {
@@ -59,11 +69,30 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public doLogin() {
+    if (this.loadIsActive) {
+      return;
+    }
     this.authService.login(this.user);
   }
 
   public doCancel() {
+    if (this.loadIsActive) {
+      return;
+    }
     this.location.back();
   }
 
+  public onUserNameChange(name) {
+    if (this.loadIsActive) {
+      return;
+    }
+    this.user.name = name;
+  }
+
+  public onUserPasswordChange(password) {
+    if (this.loadIsActive) {
+      return;
+    }
+    this.user.password = password;
+  }
 }
