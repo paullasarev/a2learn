@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from "rxjs";
-import {find, remove} from 'lodash';
+import {find, remove, clone} from 'lodash';
 
 import { Course, Courses }  from "../entities/course";
 import { LoadBlockService } from '../services/load-block';
@@ -39,7 +39,7 @@ export class CoursesService {
   }
 
   public getList(filter) {
-    return Observable.of(this.data)
+    return Observable.of(clone(this.data))
       .do(()=>{this.loadBlockService.show()})
       .delay(700)
       .do(()=>{this.loadBlockService.hide()})
@@ -64,7 +64,7 @@ export class CoursesService {
       throw new Error(`no course with id=${id}`);
     }
 
-    return Observable.of(item)
+    return Observable.of(clone(item))
       .do(()=>{this.loadBlockService.show()})
       .delay(600)
       .do(()=>{this.loadBlockService.hide()})
