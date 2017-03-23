@@ -78,20 +78,3 @@ $load-block-delay-3: 450ms;
     }
   }
 }
-
-// enter/leave animations for 'spinner' base
-.load-block-enter {
-  opacity: 0.0;
-}
-.load-block-enter.load-block-enter-active {
-  opacity: 1;
-  transition: opacity .5s ease-in;
-}
-
-.load-block-leave {
-  opacity: 1;
-}
-.load-block-leave.spinner-leave-active {
-  opacity: 0.0;
-  transition: opacity .5s ease-in;
-}
