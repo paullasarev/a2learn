@@ -41,7 +41,7 @@ import { DurationPipe } from './pipes/duration.pipe';
   ],
   providers: []
 })
-export class AppCommonModule {
+export class CoreModule {
   constructor() {
   }
 }

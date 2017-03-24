@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AppCommonModule } from '../app-common/app-common.module';
+import { CoreModule } from '../core/core.module';
 
 import { routes } from './login.routes';
 
@@ -20,7 +20,7 @@ import { LoginComponent } from './login.component';
     routes,
     FormsModule,
     ReactiveFormsModule,
-    AppCommonModule,
+    CoreModule,
     CommonModule,
   ],
   providers: []
