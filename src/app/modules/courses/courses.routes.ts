@@ -2,16 +2,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { CoursesComponent } from './courses.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { ErrorComponent } from './error/error.component';
+import { AuthGuard } from '../../services/auth-guard';
 
 // Route Configuration
 const coursesRoutes: Routes = [
-  { path: 'courses', component: CoursesComponent, data: {breadcrumb: [{label:'courses'}]} },
-  { path: 'courses/new', component: CourseDetailComponent, data: {breadcrumb: [
+  { path: 'courses', canActivate: [AuthGuard], component: CoursesComponent, data: {breadcrumb: [{label:'courses'}]}},
+  { path: 'courses/new', canActivate: [AuthGuard], component: CourseDetailComponent, data: {breadcrumb: [
       {label:'courses', route:'/courses'},
       {label:'new'}
     ]}
   },
-  { path: 'courses/:id', component: CourseDetailComponent, data: {breadcrumb: [
+  { path: 'courses/:id', canActivate: [AuthGuard], component: CourseDetailComponent, data: {breadcrumb: [
       {label:'courses', route:'/courses'},
       {expr: (params)=>`course ${params.id}`}
     ]}

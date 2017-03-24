@@ -68,4 +68,10 @@ export class AuthService {
     return this.auth$;
   }
 
+  public isLoggedIn(): boolean {
+    return this.user.isLogged;
+  }
+
+  public redirectUrl: string;
+
 }

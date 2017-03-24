@@ -16,6 +16,7 @@ import { CoursesService } from '../../services/courses-service';
 import { AuthService } from '../../services/auth-service';
 import { StorageService } from '../../services/storage-service';
 import { LoadBlockService } from '../../services/load-block';
+import { AuthGuard } from '../../services/auth-guard';
 
 import { ROUTES } from './app.routes';
 
@@ -39,6 +40,7 @@ import { ROUTES } from './app.routes';
   providers: [
     CoursesService,
     AuthService,
+    AuthGuard,
     StorageService,
     LoadBlockService
   ]
