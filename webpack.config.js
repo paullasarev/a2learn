@@ -32,9 +32,23 @@ var config  = {
     extensions: ['.ts', '.js', '.scss']
   },
   entry: {
-    polyfills: './polyfills',
+    // polyfills: './polyfills',
     app: './main',
-    vendor: './vendor'
+    // vendor: './vendor'
+    vendor: [
+      // 'jquery',
+      'lodash',
+      './polyfills',
+      'rxjs',
+      "@angular/common",
+      "@angular/compiler",
+      "@angular/core",
+      "@angular/forms",
+      "@angular/http",
+      "@angular/router",
+      "@angular/platform-browser",
+      "@angular/platform-browser-dynamic",
+    ]
   },
   output: {
     path: helpers.root('build'),
@@ -58,7 +72,7 @@ var config  = {
       template: './index.html'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['app', 'vendor', 'polyfills']
+      name: 'vendor'
     }),
     new ExtractTextPlugin({
       filename: '[name].[contenthash].css',
