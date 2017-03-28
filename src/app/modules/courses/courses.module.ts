@@ -12,13 +12,16 @@ import { CourseComponent } from './course/course.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { ErrorComponent } from './error/error.component';
 
+import { CourseStateDirective } from './state/state.directive';
+
 @NgModule({
   declarations: [
     CoursesComponent,
     CourseComponent,
     CourseDetailComponent,
     CoursesToolbarComponent,
-    ErrorComponent
+    ErrorComponent,
+    CourseStateDirective,
   ],
   exports: [
     CoursesComponent,

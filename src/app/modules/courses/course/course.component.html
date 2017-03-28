@@ -1,4 +1,4 @@
-<div class="course" [ngClass]="calculateStatusClass(course.status)">
+<div class="course" [courseState]="getState()">
   <div class="course__info">
     <div class="course__summary">
       <div class="course__title">{{course.title}}</div>

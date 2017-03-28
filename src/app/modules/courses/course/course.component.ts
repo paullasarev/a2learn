@@ -22,6 +22,20 @@ export class CourseComponent {
   ) {
   }
 
+  public getState(): string {
+    let createdDate = this.course.creatingDate;
+    let currentDate = new Date(Date.now());
+    let freshDate = new Date(Date.now() - 14*24*3600*1000);
+
+    if (createdDate < currentDate && createdDate >= freshDate) {
+      return "fresh";
+    } else if (createdDate > currentDate) {
+      return "upcoming";
+    }
+
+    return "";
+  }
+
   public doEdit() {
     this.router.navigate(['courses', this.course.id]);
   }
