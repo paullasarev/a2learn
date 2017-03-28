@@ -24,10 +24,13 @@ export class CourseComponent {
 
   public getState(): string {
     let createdDate = this.course.creatingDate;
-    let currentDate = new Date(Date.now());
+    createdDate.setHours(0,0,0,0);
+    let currentDate = new Date();
+    currentDate.setHours(0,0,0,0);
     let freshDate = new Date(Date.now() - 14*24*3600*1000);
+    freshDate.setHours(0,0,0,0);
 
-    if (createdDate < currentDate && createdDate >= freshDate) {
+    if (createdDate <= currentDate && createdDate >= freshDate) {
       return "fresh";
     } else if (createdDate > currentDate) {
       return "upcoming";
