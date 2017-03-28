@@ -93,6 +93,35 @@ export class FormInputPasswordComponent extends FormInputTextComponent {
 }
 
 @Component({
+  selector: 'form-input-date',
+  template: `
+      <div class="form-group__label">{{label}}</div>
+      <div class="form-group__value">
+        <input type="date" class="form-value form-value--input-date"
+               [value]="value | date:'yyyy-MM-dd'" (input)="onChangeDate($event)">
+      </div>
+`,
+  host: {
+    class: 'form-group__row'
+  },
+  styles: [
+    require('./form.styles.scss'),
+  ],
+  providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
+})
+export class FormInputDateComponent extends FormInputTextComponent {
+  constructor() {
+    super();
+  }
+  public onChangeDate(event) {
+    this.value = event.target.value;
+    this.valueChange.emit(new Date(this.value));
+  }
+}
+
+@Component({
   selector: 'form-input-number',
   template: `
       <div class="form-group__label">{{label}}</div>
