@@ -20,12 +20,17 @@ export class CourseStateDirective implements OnInit, OnChanges {
   }
 
   private setState(el, state) {
+    let borderWidth = null;
+    let borderColor = null;
     if (state==='fresh') {
-      el.nativeElement.style.borderColor = 'green';
+      borderColor = 'green';
+      borderWidth = '2px';
     } else if (state==='upcoming') {
-      el.nativeElement.style.borderColor = 'blue';
-    } else {
-      el.nativeElement.style.borderColor = null;
+      borderColor = 'blue';
+      borderWidth = '2px';
     }
+
+    el.nativeElement.style.borderColor = borderColor;
+    el.nativeElement.style.borderWidth = borderWidth;
   }
 }

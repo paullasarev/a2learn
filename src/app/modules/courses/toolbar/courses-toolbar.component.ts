@@ -20,12 +20,10 @@ export class CoursesToolbarComponent {
   }
 
   public doFind() {
-    console.log('doFind', this.filter);
     this.find.emit(this.filter);
   }
 
   public doAdd() {
-    console.log('doAdd');
     this.add.emit(this.filter);
   }
 }
