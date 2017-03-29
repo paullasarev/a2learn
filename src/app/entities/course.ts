@@ -6,6 +6,8 @@ export class Course {
   public description: string;
   public creatingDate: Date;
   public duration: number;
+  public topRated: boolean;
+
   public status: CourseStatus = CourseStatus.Draft;
 
   constructor(
@@ -13,11 +15,13 @@ export class Course {
     title?: string,
     description?: string,
     duration?: number,
+    topRated?: boolean,
     creatingDate?: Date) {
     this.id = id || "";
     this.title = title || "";
     this.description = description || "";
     this.duration = duration || 0;
+    this.topRated = topRated || false;
     this.creatingDate = creatingDate || new Date();
   }
 }

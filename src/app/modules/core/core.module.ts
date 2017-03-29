@@ -10,6 +10,7 @@ import {
   FormInputNumberComponent,
   FormInputTextareaComponent,
   FormInputDateComponent,
+  FormInputBooleanComponent,
 } from './form/form.component';
 import { DurationPipe } from './pipes/duration.pipe';
 
@@ -24,6 +25,7 @@ import { DurationPipe } from './pipes/duration.pipe';
     FormInputNumberComponent,
     FormInputTextareaComponent,
     FormInputDateComponent,
+    FormInputBooleanComponent,
     DurationPipe,
   ],
   exports: [
@@ -37,6 +39,7 @@ import { DurationPipe } from './pipes/duration.pipe';
     FormInputNumberComponent,
     FormInputTextareaComponent,
     FormInputDateComponent,
+    FormInputBooleanComponent,
     DurationPipe,
   ],
   imports: [

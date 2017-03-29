@@ -1,4 +1,5 @@
 @import "../../../styles/variables";
+@import "../../../styles/mixins";
 
 .course {
   display: flex;
@@ -63,4 +64,11 @@
 
   &__status {
   }
+
+  &__top-rated {
+    position: relative;
+    top: -4px;
+    @include background-image("OOjs_UI_icon_star.svg", $input-height - 4px);
+  }
+
 }

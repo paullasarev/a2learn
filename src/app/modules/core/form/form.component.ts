@@ -122,6 +122,35 @@ export class FormInputDateComponent extends FormInputTextComponent {
 }
 
 @Component({
+  selector: 'form-input-boolean',
+  template: `
+    <div class="form-group__label">{{label}}</div>
+    <div class="form-group__value">
+      <input type="checkbox" class="form-value form-value--boolean"
+             [checked]="value" (change)="onChangeChecked($event)">
+    </div>
+  `,
+  host: {
+    class: 'form-group__row'
+  },
+  styles: [
+    require('./form.styles.scss'),
+  ],
+  providers: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
+})
+export class FormInputBooleanComponent extends FormInputTextComponent {
+  constructor() {
+    super();
+  }
+  public onChangeChecked(event) {
+    this.value = event.target.checked;
+    this.valueChange.emit(!!this.value);
+  }
+}
+
+@Component({
   selector: 'form-input-number',
   template: `
       <div class="form-group__label">{{label}}</div>
