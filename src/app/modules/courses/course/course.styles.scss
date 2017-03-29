@@ -8,6 +8,10 @@
   border: 1px solid $color-courses-border;
   background-color: $color-courses-bg;
 
+  &--top-rated {
+    background-color: $color-courses-bg-top-rated;
+  }
+
   &__info {
     flex-grow: 15;
     margin-left: 10px;

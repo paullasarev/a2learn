@@ -1,4 +1,4 @@
-<div class="course" [courseState]="getState()">
+<div class="course" [courseState]="getState()" [ngClass]="{'course--top-rated':course.topRated}">
   <div class="course__info">
     <div class="course__summary">
       <div class="course__title">{{course.title}}</div>
