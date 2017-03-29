@@ -22,6 +22,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public showDeleteConfirm: boolean = false;
   private courseToDelete: Course;
   public isNoData: boolean = true;
+  public filter: string = "";
 
   constructor(
     private router: Router,
@@ -52,7 +53,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   public onFind(filter: string) {
-    this.askData(filter);
+    this.filter = filter;
+    // this.askData(filter);
   }
 
   public onAdd(filter: string) {

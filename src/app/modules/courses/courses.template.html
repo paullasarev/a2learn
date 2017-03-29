@@ -3,7 +3,7 @@
     <app-toolbar (find)="onFind($event)" (add)="onAdd($event)"></app-toolbar>
   </div>
   <div class="courses__list">
-    <div class="courses__item" *ngFor="let course of courses">
+    <div class="courses__item" *ngFor="let course of courses|filterBy:filter|orderByDate">
       <course [course]="course" (remove)=onRemove($event)></course>
     </div>
   </div>

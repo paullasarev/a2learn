@@ -1,7 +1,7 @@
 <div class="courses-toolbar">
   <div class="courses-toolbar__search">
     <div class="courses-search">
-      <input type="text" class="courses-search__input" [(ngModel)]="filter">
+      <input type="text" class="courses-search__input" [(ngModel)]="filter" placeholder="String to search">
       <div class="courses-search__find">
         <action (action)="doFind()" title="Find"></action>
       </div>

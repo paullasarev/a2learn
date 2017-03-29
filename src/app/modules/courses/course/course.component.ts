@@ -2,7 +2,7 @@ import {
   Component, ViewEncapsulation, Input, Output, EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import {Course} from '../../../entities/course';
+import { Course } from '../../../entities/course';
 import { Router } from '@angular/router';
 
 @Component({

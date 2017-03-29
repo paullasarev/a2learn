@@ -13,6 +13,9 @@ import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { ErrorComponent } from './error/error.component';
 
 import { CourseStateDirective } from './state/state.directive';
+import { OrderByPipe } from './pipes/order-by.pipe';
+import { FilterByPipe } from './pipes/filter-by.pipe';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +25,8 @@ import { CourseStateDirective } from './state/state.directive';
     CoursesToolbarComponent,
     ErrorComponent,
     CourseStateDirective,
+    OrderByPipe,
+    FilterByPipe,
   ],
   exports: [
     CoursesComponent,

@@ -12,7 +12,7 @@ import {Component, ViewEncapsulation, Output, EventEmitter, ChangeDetectionStrat
   encapsulation: ViewEncapsulation.None
 })
 export class CoursesToolbarComponent {
-  private filter: string = "string to search";
+  private filter: string = "";
   @Output() public find = new EventEmitter();
   @Output() public add = new EventEmitter();
 
