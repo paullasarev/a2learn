@@ -1,4 +1,4 @@
-@import "../../styles/colors";
+@import "../../styles/variables";
 
 .courses {
   // padding-top: 10px;
@@ -29,5 +29,14 @@
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  &__no-data {
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid $color-courses-no-data-border;
+    color: $color-courses-no-data-text;
+    background-color: $color-courses-no-data-background;
   }
 }

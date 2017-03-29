@@ -21,6 +21,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   private isLoading: boolean = false;
   public showDeleteConfirm: boolean = false;
   private courseToDelete: Course;
+  public isNoData: boolean = true;
 
   constructor(
     private router: Router,
@@ -41,6 +42,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   private gotData(courses: Courses) {
     this.isLoading = false;
     this.courses = courses;
+    this.isNoData = !this.courses.length;
     this.changeDetectorRef.markForCheck();
   }
 

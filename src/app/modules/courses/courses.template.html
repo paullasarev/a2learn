@@ -7,7 +7,7 @@
       <course [course]="course" (remove)=onRemove($event)></course>
     </div>
   </div>
-  <div *ngIf="isLoading" class="courses__loading">Is loading...</div>
+  <div *ngIf="isNoData" class="courses__no-data">No data. Fill free to add new course.</div>
   <confirm *ngIf="showDeleteConfirm"
     [message]="'Do you really want to delete this course?'"
     (ok)="doConfirmDelete()" (cancel)="doCancelDelete()"

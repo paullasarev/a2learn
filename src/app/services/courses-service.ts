@@ -29,13 +29,20 @@ export class CoursesService {
     this.listRequests = new Subject<string>();
     this.list$ = this.listRequests
       .flatMap(this.getList.bind(this))
-      .debounceTime(300);
+      .debounceTime(300)
+      .share()
+    ;
 
     this.itemRequests = new Subject<string>();
     this.item$ = this.itemRequests
       .flatMap(this.getItem.bind(this))
       .debounceTime(300)
+      .share()
       ;
+
+    //keep at least one observer
+    this.list$.subscribe(()=>{});
+    this.item$.subscribe(()=>{});
   }
 
   public getList(filter) {
