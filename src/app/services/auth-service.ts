@@ -71,34 +71,13 @@ export class AuthService {
   }
 
   private doAuth(user: User, response: Response): AuthUser {
-    let authUser: AuthUser;
-    // if (response.status == 200) {
-      let body = response.json();
-      user.token = body.token;
-      user.password = '';
-      this.storage.setItem(STORAGE_KEY, user);
-      authUser = new AuthUser(user);
-    // } else {
-    //   authUser = new AuthUser(user, new Error(response.statusText));
-    // }
-    this.user = authUser;
-    return authUser;
+    let body = response.json();
+    user.token = body.token;
+    user.password = '';
+    this.storage.setItem(STORAGE_KEY, user);
+    this.user = new AuthUser(user);
+    return this.user;
   }
-
-  // public doAuth(user: User): AuthUser {
-  //   this.user = new AuthUser(user);
-
-  //   if (user && user.name === 'e') {
-  //     this.user.error = new Error("wrong credentials");
-  //   } else if (user) {
-  //     this.storage.setItem(STORAGE_KEY, user);
-  //     this.user.user.token = new Date().toUTCString();
-  //   } else {
-  //     this.storage.removeItem(STORAGE_KEY);
-  //   }
-
-  //   return this.user;
-  // }
 
   public get auth() : Observable<AuthUser> {
     return this.auth$;

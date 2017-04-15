@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from "rxjs";
-import {find, remove, clone} from 'lodash';
+import { Http, Response } from '@angular/http';
+import { find, remove, clone, each, map } from 'lodash';
+import { Router } from '@angular/router';
 
 import { Course, Courses }  from "../entities/course";
 import { LoadBlockService } from '../services/load-block';
@@ -9,6 +11,7 @@ import { LoadBlockService } from '../services/load-block';
 export class CoursesService {
   private data: Courses;
   private lastId: number;
+  private apiUrl = "/api/courses";
 
   private listRequests: Subject<string>;
   private list$: Observable<Courses>;
@@ -17,6 +20,8 @@ export class CoursesService {
   private item$: Observable<Course>;
 
   constructor(
+    private http: Http,
+    private router: Router,
     private loadBlockService: LoadBlockService,
   ) {
     this.data = [
@@ -28,15 +33,19 @@ export class CoursesService {
 
     this.listRequests = new Subject<string>();
     this.list$ = this.listRequests
-      .flatMap(this.getList.bind(this))
       .debounceTime(300)
+      .do(()=>{this.loadBlockService.hide()})
+      .switchMap(this.getList.bind(this))
+      .do(()=>{this.loadBlockService.hide()})
       .share()
     ;
 
     this.itemRequests = new Subject<string>();
     this.item$ = this.itemRequests
-      .flatMap(this.getItem.bind(this))
       .debounceTime(300)
+      .do(()=>{this.loadBlockService.hide()})
+      .switchMap(this.getItem.bind(this))
+      .do(()=>{this.loadBlockService.hide()})
       .share()
       ;
 
@@ -45,12 +54,38 @@ export class CoursesService {
     this.item$.subscribe(()=>{});
   }
 
-  public getList(filter) {
-    return Observable.of(clone(this.data))
-      .do(()=>{this.loadBlockService.show()})
-      .delay(700)
-      .do(()=>{this.loadBlockService.hide()})
+  private getList(filter): Observable<Courses> {
+    return this.http.get(this.apiUrl, {
+      })
+      .map(this.extractCourses.bind(this))
     ;
+  }
+
+  private extractCourses(response: Response): Courses {
+    let body = response.json();
+    return map<any, Course>(body, this.extractCourse.bind(this));
+  }
+
+  private extractCourse(item: any): Course {
+    return new Course(
+      item.id,
+      item.name,
+      item.description,
+      item.length,
+      item.isTopRated,
+      new Date(item.date)
+    );
+  }
+
+  private encodeCourse(course: Course): any {
+    return {
+      "id": course.id,
+      "name": course.title,
+      "description": course.description,
+      "isTopRated": course.topRated,
+      "date": course.creatingDate,
+      "length": course.duration
+    }
   }
 
   public askList(filter?: string) : void {
@@ -61,20 +96,18 @@ export class CoursesService {
     return this.list$;
   }
 
-  public getItem(id) {
+  public getItem(id): Observable<Course> {
     if (!id) {
       return Observable.of(new Course("", "Course", "New course", 120));
     }
 
-    let item = find(this.data, {id:id});
-    if (!item) {
-      throw new Error(`no course with id=${id}`);
-    }
-
-    return Observable.of(clone(item))
-      .do(()=>{this.loadBlockService.show()})
-      .delay(600)
-      .do(()=>{this.loadBlockService.hide()})
+    return this.http.get(this.apiUrl + '/' + id)
+      .map((response: Response) => response.json())
+      .map(this.extractCourse.bind(this))
+      .catch((error) => {
+        this.router.navigate(['error', (error && error.message)]);
+        return Observable.of(new Course());
+      })
     ;
   }
 
@@ -87,29 +120,45 @@ export class CoursesService {
   }
 
   public removeItem(id: string) : void {
-    let item = find(this.data, {id:id});
-    if (!item) {
-      throw new Error(`no course with id=${id}`);
-    }
-    remove(this.data, {id:id});
-    this.listRequests.next("");
+    this.loadBlockService.show();
+    this.http.delete(this.apiUrl + '/' + id)
+      .toPromise()
+      .then((response: Response) => {
+        this.loadBlockService.hide();
+         this.listRequests.next("");
+      })
+      .catch((error) => {
+        this.loadBlockService.hide();
+        this.router.navigate(['error', (error && error.message)]);
+      })
   }
 
   public saveItem(course: Course) {
-    if (!course.id) {
-      this.lastId++;
-      course.id = this.lastId.toString();
-    }
+    this.loadBlockService.show();
+    this.http.put(this.apiUrl + '/' + course.id, this.encodeCourse(course))
+      .toPromise()
+      .then((response: Response) => {
+        this.loadBlockService.hide();
+         this.listRequests.next("");
+      })
+      .catch((error) => {
+        this.loadBlockService.hide();
+        this.router.navigate(['error', (error && error.message)]);
+      })
+    // if (!course.id) {
+    //   this.lastId++;
+    //   course.id = this.lastId.toString();
+    // }
 
-    let item = find(this.data, {id: course.id});
-    if (item) {
-      Object.assign(item, course);
-      this.askItem(course.id);
-    } else {
-      this.data.push(course);
-      this.askItem(course.id);
-    }
-    this.askList("");
+    // let item = find(this.data, {id: course.id});
+    // if (item) {
+    //   Object.assign(item, course);
+    //   this.askItem(course.id);
+    // } else {
+    //   this.data.push(course);
+    //   this.askItem(course.id);
+    // }
+    // this.askList("");
   }
 
 }
