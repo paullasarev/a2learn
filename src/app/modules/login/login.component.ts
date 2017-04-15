@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription;
   private loadSubscription: Subscription;
   private loadIsActive: boolean = false;
+  public error: Error;
 
   public user: User;
 
@@ -57,7 +58,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.changeDetectorRef.markForCheck();
     let error = auth.error;
     if (error) {
-      this.router.navigate(['error', (error && error.message)]);
+      //this.router.navigate(['error', (error && error.message)]);
+      this.error = error;
     } else if (auth.user) {
       if (this.authService.redirectUrl) {
         this.router.navigate([this.authService.redirectUrl]);
@@ -76,6 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.loadIsActive) {
       return;
     }
+    this.error = null;
     this.authService.login(this.user);
   }
 

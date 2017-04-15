@@ -34,4 +34,11 @@
     margin-left: 10px;
   }
 
+  &__error{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+    color: $color-popup-error;
+  }
+
 }
