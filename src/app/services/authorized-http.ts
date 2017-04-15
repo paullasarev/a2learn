@@ -14,17 +14,23 @@ export class AuthorizedHttp extends Http {
       super(backend, defaultOptions)
     }
 
-    request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-      if (!options) {
-        // let's make option object
-        options = {
-          headers: new Headers(),
-        };
+    request(url: string | Request, pOptions?: RequestOptionsArgs): Observable<Response> {
+      let options = pOptions;
+      if (typeof url === 'string') {
+        if (!options) {
+          options = {
+            headers: new Headers(),
+          };
+          pOptions = options;
+        }
+      } else {
+        options = url;
       }
-      options.headers.append('Authorization', 'Basic ' + this.authService.getToken());
+
+      options.headers.set('Authorization', this.authService.getToken());
       options.withCredentials = true;
-      console.log('AuthorizedHttp', options)
-      return super.request(url, options)
+
+      return super.request(url, pOptions)
     }
 
 }
