@@ -5,7 +5,7 @@ import {
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { Course, Courses } from '../../entities/course';
+import { Course, Courses, Filter } from '../../entities/course';
 import { CoursesService } from '../../services/courses-service';
 
 @Component({
@@ -22,7 +22,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public showDeleteConfirm: boolean = false;
   private courseToDelete: Course;
   public isNoData: boolean = true;
-  public filter: string = "";
+  public filter: Filter = {start: 0, count: 5, query: "", sort:"date"};
 
   constructor(
     private router: Router,
@@ -47,14 +47,15 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.changeDetectorRef.markForCheck();
   }
 
-  private askData(filter?: string) {
+  private askData() {
     this.isLoading = true;
-    this.coursesService.askList(filter);
+    this.coursesService.askList(this.filter);
   }
 
-  public onFind(filter: string) {
-    this.filter = filter;
-    // this.askData(filter);
+  public onFind(query: string) {
+    this.filter.query = query;
+    this.filter.start = 0;
+    this.askData();
   }
 
   public onAdd(filter: string) {
@@ -76,5 +77,20 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public doCancelDelete() {
     this.showDeleteConfirm = false;
     this.changeDetectorRef.markForCheck();
+  }
+
+  public nextPage() {
+    if (this.courses.length == this.filter.count) {
+      this.filter.start += this.filter.count - 1;
+    }
+    this.askData();
+  }
+
+  public prevPage() {
+    this.filter.start -= this.filter.count - 1;
+    if (this.filter.start < 0) {
+      this.filter.start = 0;
+    }
+    this.askData();
   }
 }

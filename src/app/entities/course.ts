@@ -27,3 +27,11 @@ export class Course {
 }
 
 export type Courses = Array<Course>;
+
+export interface Filter {
+  start: number;
+  count: number;
+  query: string;
+  sort: string;
+}
+

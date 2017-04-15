@@ -39,4 +39,22 @@
     color: $color-courses-no-data-text;
     background-color: $color-courses-no-data-background;
   }
+
+  &__paging {
+    margin-top: 10px;
+  }
+}
+
+.paging {
+  display: flex;
+  justify-content: space-around;
+
+  &__prev, &__next {
+    background-color: $color-courses-paging-bg;
+    padding: 2px 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: darken($color-courses-paging-bg, 10%);
+    }
+  }
 }

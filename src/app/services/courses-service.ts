@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from "rxjs";
-import { Http, Response } from '@angular/http';
+import { Http, Response, URLSearchParams } from '@angular/http';
 import { find, remove, clone, each, map } from 'lodash';
 import { Router } from '@angular/router';
 
-import { Course, Courses }  from "../entities/course";
+import { Course, Courses, Filter }  from "../entities/course";
 import { LoadBlockService } from '../services/load-block';
+
 
 @Injectable()
 export class CoursesService {
@@ -13,7 +14,9 @@ export class CoursesService {
   private lastId: number;
   private apiUrl = "/api/courses";
 
-  private listRequests: Subject<string>;
+  private filter: Filter = {start: 0, count: 100, query:"", sort:"date"};
+
+  private listRequests: Subject<Filter>;
   private list$: Observable<Courses>;
 
   private itemRequests: Subject<string>;
@@ -31,7 +34,7 @@ export class CoursesService {
 
     this.lastId = 100;
 
-    this.listRequests = new Subject<string>();
+    this.listRequests = new Subject<Filter>();
     this.list$ = this.listRequests
       .debounceTime(300)
       .do(()=>{this.loadBlockService.hide()})
@@ -54,9 +57,13 @@ export class CoursesService {
     this.item$.subscribe(()=>{});
   }
 
-  private getList(filter): Observable<Courses> {
-    return this.http.get(this.apiUrl, {
-      })
+  private getList(filter: Filter): Observable<Courses> {
+    let params = new URLSearchParams();
+    params.set('start', filter.start.toString());
+    params.set('count', filter.count.toString());
+    params.set('query', filter.query);
+    params.set('sort', filter.sort);
+    return this.http.get(this.apiUrl, {search: params})
       .map(this.extractCourses.bind(this))
     ;
   }
@@ -88,7 +95,8 @@ export class CoursesService {
     }
   }
 
-  public askList(filter?: string) : void {
+  public askList(filter: Filter) : void {
+    this.filter = filter;
     this.listRequests.next(filter);
   }
 
@@ -125,7 +133,7 @@ export class CoursesService {
       .toPromise()
       .then((response: Response) => {
         this.loadBlockService.hide();
-         this.listRequests.next("");
+         this.listRequests.next(this.filter);
       })
       .catch((error) => {
         this.loadBlockService.hide();
@@ -139,26 +147,12 @@ export class CoursesService {
       .toPromise()
       .then((response: Response) => {
         this.loadBlockService.hide();
-         this.listRequests.next("");
+         this.listRequests.next(this.filter);
       })
       .catch((error) => {
         this.loadBlockService.hide();
         this.router.navigate(['error', (error && error.message)]);
       })
-    // if (!course.id) {
-    //   this.lastId++;
-    //   course.id = this.lastId.toString();
-    // }
-
-    // let item = find(this.data, {id: course.id});
-    // if (item) {
-    //   Object.assign(item, course);
-    //   this.askItem(course.id);
-    // } else {
-    //   this.data.push(course);
-    //   this.askItem(course.id);
-    // }
-    // this.askList("");
   }
 
 }
