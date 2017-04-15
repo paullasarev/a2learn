@@ -60,6 +60,13 @@ var config  = {
   //devtool: 'eval', //quick
   devtool: 'source-map', //standard
 
+  devServer: {
+    setup(app) {
+      let server = require('./mock-server/server');
+      server.run(app);
+    }
+  },
+
   plugins: [
     new CaseSensitivePathsPlugin(),
 
