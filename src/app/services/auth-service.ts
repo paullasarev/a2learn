@@ -87,6 +87,10 @@ export class AuthService {
     return this.user.isLogged;
   }
 
+  public getToken(): string {
+    return this.user && this.user.user && this.user.user.token || "";
+  }
+
   public redirectUrl: string;
 
 }

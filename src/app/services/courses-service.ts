@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { Course, Courses, Filter }  from "../entities/course";
 import { LoadBlockService } from '../services/load-block';
-
+import { AuthorizedHttp } from '../services/authorized-http';
 
 @Injectable()
 export class CoursesService {
@@ -23,7 +23,7 @@ export class CoursesService {
   private item$: Observable<Course>;
 
   constructor(
-    private http: Http,
+    private http: AuthorizedHttp,
     private router: Router,
     private loadBlockService: LoadBlockService,
   ) {

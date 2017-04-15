@@ -1,7 +1,7 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 
 import { CoursesModule } from '../courses/courses.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import { AuthService } from '../../services/auth-service';
 import { StorageService } from '../../services/storage-service';
 import { LoadBlockService } from '../../services/load-block';
 import { AuthGuard } from '../../services/auth-guard';
+import { AuthorizedHttp } from '../../services/authorized-http';
 
 import { ROUTES } from './app.routes';
 
@@ -44,7 +45,14 @@ import { ROUTES } from './app.routes';
     AuthService,
     AuthGuard,
     StorageService,
-    LoadBlockService
+    LoadBlockService,
+    {
+      provide: AuthorizedHttp,
+      useFactory: (authService:AuthService, backend: XHRBackend, options: RequestOptions) => {
+        return new AuthorizedHttp(authService, backend, options);
+      },
+      deps: [AuthService, XHRBackend, RequestOptions]
+    }
   ]
 })
 export class AppModule {
