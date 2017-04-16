@@ -72,7 +72,14 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   public doSave() {
-    this.coursesService.saveItem(this.course);
+    if (this.course.id) {
+      this.coursesService.saveItem(this.course);
+    } else {
+      this.coursesService.newItem(this.course)
+        .then((course: Course) => {
+          this.router.navigate(['courses', course.id], {replaceUrl: true});
+        });
+    }
   }
 
   public doCancel() {

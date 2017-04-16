@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { ActionComponent } from './action/action.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import {
@@ -44,6 +46,7 @@ import { DurationPipe } from './pipes/duration.pipe';
   ],
   imports: [
     CommonModule,
+    FormsModule,
   ],
   providers: []
 })

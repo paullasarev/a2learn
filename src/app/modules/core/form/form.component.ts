@@ -38,7 +38,7 @@ export class FormGroupComponent {
       <div class="form-group__label">{{label}}</div>
       <div class="form-group__value">
         <input type="text" class="form-value form-value--input"
-               [value]="value" (input)="onChange($event)">
+               [(ngModel)]="value" (input)="onChange($event)">
       </div>
 `,
   styles: [
@@ -61,7 +61,7 @@ export class FormInputTextComponent {
   }
 
   public onChange(event) {
-    this.value = event.target.value;
+    // this.value = event.target.value;
     this.valueChange.emit(this.value);
   }
 
@@ -73,7 +73,7 @@ export class FormInputTextComponent {
       <div class="form-group__label">{{label}}</div>
       <div class="form-group__value">
         <input type="password" class="form-value form-value--input-password"
-               [value]="value" (input)="onChange($event)">
+               [(ngModel)]="value" (input)="onChange($event)">
       </div>
 `,
   host: {
@@ -156,7 +156,7 @@ export class FormInputBooleanComponent extends FormInputTextComponent {
       <div class="form-group__label">{{label}}</div>
       <div class="form-group__value">
         <input type="text" class="form-value form-value--input-number"
-               [value]="value" (input)="onChange($event)">
+               [(ngModel)]="value" (input)="onChange($event)">
         <div *ngIf="!!tip" class="form-value-tip">{{tip}}</div>
       </div>
 `,

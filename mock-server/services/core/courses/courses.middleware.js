@@ -21,14 +21,28 @@ module.exports = (server) => {
     }
 
 		let from = query.start ? +query.start : 0;
-		let to = query.count && query.start ? +query.start + +query.count : courses.length;
-		if (courses.length < to) {
+    let count = query.count ? +query.count : courses.length;
+    let reverse = query.reverse === 'true';
+
+    if (from > courses.length) {
+      from = courses.length - 2;
+    }
+    if (from < 0) {
+      from = 0;
+    }
+		let to = from + count;
+		if (to >= courses.length) {
 			to = courses.length;
 		}
-		courses = courses.slice(from, to);
 
-		console.log('sort, query, from, to', sort, queryStr, from, to);
-    console.log('courses', courses.length)
+    if (reverse) {
+      const toTmp = to;
+      to = courses.length - from;
+      from = courses.length - toTmp;
+    }
+
+  	// console.log('sort, query, reverse, length, from, to', sort, queryStr, reverse, courses.length, from, to);
+		courses = courses.slice(from, to);
 
 		res.json(courses);
 	});

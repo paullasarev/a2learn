@@ -10,11 +10,9 @@ import { AuthorizedHttp } from '../services/authorized-http';
 
 @Injectable()
 export class CoursesService {
-  private data: Courses;
-  private lastId: number;
   private apiUrl = "/api/courses";
 
-  private filter: Filter = {start: 0, count: 100, query:"", sort:"date"};
+  private filter: Filter = {start: 0, count: 100, query:"", sort:"date", reverse: false};
 
   private listRequests: Subject<Filter>;
   private list$: Observable<Courses>;
@@ -27,17 +25,10 @@ export class CoursesService {
     private router: Router,
     private loadBlockService: LoadBlockService,
   ) {
-    this.data = [
-      new Course('1', 'javascript', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore fuga tenetur illum, reprehenderit possimus architecto optio maxime dolore iure, nobis, provident. Repellat quod cupiditate doloremque esse natus vero delectus dolores!', 600, true),
-      new Course('2', 'CSS', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora repellendus deleniti temporibus nesciunt culpa recusandae excepturi mollitia minima, provident commodi maxime illum voluptates architecto et nobis corrupti. Optio esse, quod.', 300)
-    ];
-
-    this.lastId = 100;
-
     this.listRequests = new Subject<Filter>();
     this.list$ = this.listRequests
-      .debounceTime(300)
-      .do(()=>{this.loadBlockService.hide()})
+      // .debounceTime(300)
+      .do(()=>{this.loadBlockService.show()})
       .switchMap(this.getList.bind(this))
       .do(()=>{this.loadBlockService.hide()})
       .share()
@@ -45,8 +36,8 @@ export class CoursesService {
 
     this.itemRequests = new Subject<string>();
     this.item$ = this.itemRequests
-      .debounceTime(300)
-      .do(()=>{this.loadBlockService.hide()})
+      // .debounceTime(300)
+      .do(()=>{this.loadBlockService.show()})
       .switchMap(this.getItem.bind(this))
       .do(()=>{this.loadBlockService.hide()})
       .share()
@@ -63,6 +54,7 @@ export class CoursesService {
     params.set('count', filter.count.toString());
     params.set('query', filter.query);
     params.set('sort', filter.sort);
+    params.set('reverse', filter.reverse.toString());
     return this.http.get(this.apiUrl, {search: params})
       .map(this.extractCourses.bind(this))
     ;
@@ -109,14 +101,19 @@ export class CoursesService {
       return Observable.of(new Course("", "Course", "New course", 120));
     }
 
-    return this.http.get(this.apiUrl + '/' + id)
+    return this.http
+      .get(this.apiUrl + '/' + id)
       .map((response: Response) => response.json())
       .map(this.extractCourse.bind(this))
-      .catch((error) => {
-        this.router.navigate(['error', (error && error.message)]);
+      .catch((response: Response) => {
+        this.router.navigate(['error', this.getStatus(id, response)], {replaceUrl: true});
         return Observable.of(new Course());
       })
     ;
+  }
+
+  private getStatus(id: string, response: Response): string {
+    return 'Course ' + id + ': ' + response.statusText + ' ('  + response.status + ')';
   }
 
   public askItem(id: string) : void {
@@ -127,32 +124,61 @@ export class CoursesService {
     return this.item$;
   }
 
-  public removeItem(id: string) : void {
+  public removeItem(id: string) : Promise<boolean> {
     this.loadBlockService.show();
-    this.http.delete(this.apiUrl + '/' + id)
+    return this.http
+      .delete(this.apiUrl + '/' + id)
       .toPromise()
       .then((response: Response) => {
         this.loadBlockService.hide();
-         this.listRequests.next(this.filter);
+        this.listRequests.next(this.filter);
+        return true;
       })
       .catch((error) => {
         this.loadBlockService.hide();
         this.router.navigate(['error', (error && error.message)]);
+        return false;
       })
   }
 
-  public saveItem(course: Course) {
+  public saveItem(course: Course): Promise<boolean> {
     this.loadBlockService.show();
-    this.http.put(this.apiUrl + '/' + course.id, this.encodeCourse(course))
+    return this.http
+      .put(this.apiUrl + '/' + course.id, this.encodeCourse(course))
       .toPromise()
       .then((response: Response) => {
-        this.loadBlockService.hide();
-         this.listRequests.next(this.filter);
+        this.listRequests.next(this.filter);
+        return true;
       })
-      .catch((error) => {
+      .catch((response: Response) => {
+        this.router.navigate(['error', this.getStatus(course.id, response)]);
+        return false;
+      })
+      .then((result)=>{
         this.loadBlockService.hide();
-        this.router.navigate(['error', (error && error.message)]);
+        return result;
       })
   }
+
+  public newItem(course: Course): Promise<Course> {
+    this.loadBlockService.show();
+    return this.http
+      .post(this.apiUrl, this.encodeCourse(course))
+      .toPromise()
+      .then((response: Response) => {
+        this.listRequests.next(this.filter);
+        return response.json();
+      })
+      .then(this.extractCourse.bind(this))
+      .catch((response: Response) => {
+        this.router.navigate(['error', this.getStatus('new', response)]);
+        return null;
+      })
+      .then((result)=>{
+        this.loadBlockService.hide();
+        return result;
+      })
+  }
+
 
 }

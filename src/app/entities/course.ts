@@ -33,5 +33,6 @@ export interface Filter {
   count: number;
   query: string;
   sort: string;
+  reverse: boolean;
 }
 

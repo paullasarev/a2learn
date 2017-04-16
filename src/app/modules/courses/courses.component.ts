@@ -22,7 +22,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public showDeleteConfirm: boolean = false;
   private courseToDelete: Course;
   public isNoData: boolean = true;
-  public filter: Filter = {start: 0, count: 5, query: "", sort:"date"};
+  public filter: Filter = {start: 0, count: 5, query: "", sort:"date", reverse: false};
 
   constructor(
     private router: Router,
@@ -80,17 +80,38 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   public nextPage() {
-    if (this.courses.length == this.filter.count) {
-      this.filter.start += this.filter.count - 1;
-    }
+    this.setPage(true);
     this.askData();
   }
 
   public prevPage() {
-    this.filter.start -= this.filter.count - 1;
-    if (this.filter.start < 0) {
-      this.filter.start = 0;
+    this.setPage(false);
+    this.askData();
+  }
+
+  private setPage(next: boolean) {
+    const reverse = this.filter.reverse;
+    if (reverse !== next) {
+      if (this.courses.length == this.filter.count) {
+        this.filter.start += this.filter.count - 1;
+      }
+    } else {
+      this.filter.start -= this.filter.count - 1;
+      if (this.filter.start < 0) {
+        this.filter.start = 0;
+      }
     }
+  }
+
+  public firstPage() {
+    this.filter.start = 0;
+    this.filter.reverse = false;
+    this.askData();
+  }
+
+  public lastPage() {
+    this.filter.start = 0;
+    this.filter.reverse = true;
     this.askData();
   }
 }

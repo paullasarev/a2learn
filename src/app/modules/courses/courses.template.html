@@ -9,8 +9,10 @@
   </div>
   <div class="courses__paging">
     <div class="paging">
+      <div class="paging__prev" (click)="firstPage()">First page</div>
       <div class="paging__prev" (click)="prevPage()">Previous page</div>
       <div class="paging__next" (click)="nextPage()">Next page</div>
+      <div class="paging__next" (click)="lastPage()">Last page</div>
     </div>
   </div>
   <div *ngIf="isNoData" class="courses__no-data">No data. Fill free to add new course.</div>
