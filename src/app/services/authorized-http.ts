@@ -27,7 +27,7 @@ export class AuthorizedHttp extends Http {
         options = url;
       }
 
-      options.headers.set('Authorization', this.authService.getToken());
+      options.headers.set('Authorization', 'Bearer ' + this.authService.getToken());
       options.withCredentials = true;
 
       return super.request(url, pOptions)
