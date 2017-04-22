@@ -11,7 +11,7 @@
       <action (action)="doCancel()" title="Cancel"></action>
     </div>
     <div class="login__action">
-      <action (action)="doLogin()" title="Login"></action>
+      <action (action)="doLogin()" title="Login" [disabled]="!isValid()"></action>
     </div>
   </div>
 </div>

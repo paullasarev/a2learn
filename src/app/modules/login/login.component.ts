@@ -102,4 +102,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     this.user.password = password;
   }
+
+  public isValid(): boolean{
+    return !!this.user.name && !!this.user.password;
+  }
 }
