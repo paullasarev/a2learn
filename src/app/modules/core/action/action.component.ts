@@ -14,6 +14,7 @@ export class ActionComponent {
   @Input() public title: string = "";
   @Input() public icon: string = "";
   @Output() public action =  new EventEmitter();
+  @Input() public disabled: boolean = false;
 
   constructor() {
   }

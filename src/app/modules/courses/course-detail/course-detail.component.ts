@@ -5,9 +5,12 @@ import {
 import {Router, ActivatedRoute, Params } from '@angular/router';
 import {Subscription} from 'rxjs';
 import {Location} from '@angular/common';
+import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {assign} from 'lodash';
 
 import {Course} from '../../../entities/course';
 import {CoursesService} from '../../../services/courses-service';
+import {IntegerValidator} from '../../core/form/form.component';
 
 @Component({
   selector: 'course-detail',
@@ -24,14 +27,23 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
 
   public id: string = "";
   public course: Course = new Course();
+  public courseForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
     private location: Location,
+    private formBuilder: FormBuilder,
     private coursesService: CoursesService
     ) {
+      this.courseForm = this.formBuilder.group({
+        title: ['',[Validators.required, Validators.maxLength(50)]],
+        description: ['', [Validators.required, Validators.maxLength(500)]],
+        creatingDate: [new Date(), [Validators.required]],
+        duration: [0, [Validators.required, IntegerValidator/*, Validators.pattern('[0-9]*')*/]],
+        topRated: false,
+      });
   }
 
   public ngOnInit() {
@@ -48,7 +60,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     let id:string = params.id || "";
 
     if (!id || this.id !== id) {
-      this.course = new Course();
+      this.setCourse(new Course());
     }
 
     this.id = id;
@@ -59,9 +71,14 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     this.coursesService.askItem(this.id);
   }
 
+  private setCourse(course: Course) {
+    this.course = course;
+    this.courseForm.patchValue(this.course);
+  }
+
   private gotData(course: Course) {
     if (course.id == this.id) {
-      this.course = course;
+      this.setCourse(course);
     }
     this.changeDetectorRef.markForCheck();
   }
@@ -72,6 +89,11 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   public doSave() {
+    assign(this.course, this.courseForm.value);
+    if (!this.courseForm.valid) {
+      return;
+    }
+
     if (this.course.id) {
       this.coursesService.saveItem(this.course);
     } else {

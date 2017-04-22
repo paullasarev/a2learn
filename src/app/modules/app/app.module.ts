@@ -2,6 +2,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CoursesModule } from '../courses/courses.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,8 @@ import { ROUTES } from './app.routes';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
     HttpModule,
     CoursesModule,

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CoreModule } from '../core/core.module';
 import { CoursesToolbarComponent } from './toolbar/courses-toolbar.component';
@@ -34,6 +34,7 @@ import { FilterByPipe } from './pipes/filter-by.pipe';
   imports: [
     routes,
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     CoreModule
   ],

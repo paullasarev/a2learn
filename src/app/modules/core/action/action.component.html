@@ -2,7 +2,7 @@
   <div *ngIf="icon" class="{{'action__icon action__icon--' + icon}}"></div>
   <button class="action__button"
           [ngClass]="{'action__button--with-icon':icon}"
-          (click)="onAction()">
+          (click)="onAction()" [disabled]="disabled">
     {{title}}
   </button>
 </div>

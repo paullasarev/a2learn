@@ -3,20 +3,24 @@
     {{id}}
   </div>
   <div class="course-detail__details">
-    <form-group>
-      <form-input-text label="Title" [(value)]="course.title"></form-input-text>
-      <form-input-textarea label="Description" [(value)]="course.description"></form-input-textarea>
-      <form-input-date label="Creating date" [(value)]="course.creatingDate"></form-input-date>
-      <form-input-number label="Duration" [(value)]="course.duration"
-         [tip]="course.duration|duration">
+    <form-group [formGroup]="courseForm">
+      <form-input-text label="Title"
+        formControlName="title"></form-input-text>
+      <form-input-textarea label="Description"
+        formControlName="description"></form-input-textarea>
+      <form-input-date label="Creating date"
+       formControlName="creatingDate"></form-input-date>
+      <form-input-number label="Duration"
+         formControlName="duration" [tip]="courseForm.value.duration|duration">
       </form-input-number>
-      <form-input-boolean label="Top rated" [(value)]="course.topRated"></form-input-boolean>
+      <form-input-boolean label="Top rated"
+       formControlName="topRated"></form-input-boolean>
     </form-group>
   </div>
 
   <div class="course-detail__actions">
     <div class="course-detail__action">
-      <action (action)="doSave()" title="Save"></action>
+      <action (action)="doSave()" title="Save" [disabled]="courseForm.invalid"></action>
     </div>
     <div class="course-detail__action">
       <action (action)="doCancel()" title="Close"></action>

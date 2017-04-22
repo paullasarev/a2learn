@@ -16,6 +16,12 @@
     display: table-row;
   }
 
+  &__row.ng-invalid {
+    input {
+      border-color: $color-input-border-error;
+    }
+  }
+
   &__label {
     display: table-cell;
     vertical-align: top;

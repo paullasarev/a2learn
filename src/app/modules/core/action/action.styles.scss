@@ -36,6 +36,10 @@
       background-color: darken($color-button-bg, 10%);
     }
 
+    &:disabled {
+      background-color: $color-button-bg-disabled;
+    }
+
     &--with-icon {
       padding-left: $input-height;
     }

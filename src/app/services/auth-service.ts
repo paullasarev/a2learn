@@ -33,7 +33,6 @@ export class AuthService {
       this.authRequests
         .do(()=>{this.loadBlockService.show()})
         .switchMap((user: User) => {
-          console.log('switchMap user', user)
           if (!user) {
             return Observable.of(this.errorUser);
           }
@@ -57,17 +56,15 @@ export class AuthService {
   }
 
   public logout() {
-    console.log('AuthService.logout')
     this.authRequests.next(null);
   }
 
   public login(user: User) {
-    console.log('AuthService.login', user.name)
     this.authRequests.next(user);
   }
 
   private handleError(user: User, response: Response): Observable<AuthUser> {
-      return Observable.of(new AuthUser(user, new Error(response.statusText)));
+    return Observable.of(new AuthUser(user, new Error(response.statusText)));
   }
 
   private doAuth(user: User, response: Response): AuthUser {
