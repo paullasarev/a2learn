@@ -80,10 +80,14 @@ export class FormInputTextComponent  implements ControlValueAccessor {
   //set accessor including call the onchange callback
   @Input() public set value(v: any) {
     if (v !== this.value) {
-      this.innerValue = v;
-      this.onChangeCallback(v);
-      this.onChange(this.innerValue);
+      this.setValue(v);
     }
+  }
+
+  protected setValue(v) {
+    this.innerValue = v;
+    this.onChangeCallback(v);
+    this.onChange(this.innerValue);
   }
 
   //Set touched on blur
@@ -206,6 +210,38 @@ export class FormInputBooleanComponent extends FormInputTextComponent {
 }
 
 @Component({
+  selector: 'form-check-list',
+  template: `
+    <div class="form-group__label">{{label}}</div>
+    <div class="form-group__value form-group__value--list">
+      <div class="form-group__item" *ngFor="let item of value">
+        <input type="checkbox" class="form-value form-value--inline form-value--boolean"
+              [checked]="item.value" (change)="onChangeChecked(item, $event)">
+        <div class="form-value form-value--inline form-value--label">{{item.label}}</div>
+      </div>
+    </div>
+  `,
+  host: {
+    class: 'form-group__row'
+  },
+  styles: [
+    require('./form.styles.scss'),
+  ],
+  providers: [componentProvider(FormCheckListComponent)],
+  encapsulation: ViewEncapsulation.None
+})
+export class FormCheckListComponent extends FormInputTextComponent {
+  constructor() {
+    super();
+  }
+  public onChangeChecked(item, event) {
+    item.value = !!event.target.checked;
+    this.setValue(this.value);
+  }
+}
+
+
+@Component({
   selector: 'form-input-number',
   template: `
       <div class="form-group__label">{{label}}</div>
@@ -256,6 +292,9 @@ export class FormInputTextareaComponent extends FormInputTextComponent {
   }
 }
 
+
+
+
 export function IntegerValidator(control: AbstractControl): {[key: string]: any} {
   const value = control.value;
   if (/^[0-9]+$/.test(value)) {
@@ -282,4 +321,21 @@ export class IntegerValidatorDirective implements Validator {
     validate(c: AbstractControl): { [key: string]: any } {
       return this.validator(c);
     }
+}
+
+export function NonEmptyCheckListValidator(control: AbstractControl): {[key: string]: any} {
+  const value = control.value;
+
+  let isEmpty = true;
+  value.forEach(item => {
+    if (item.value) {
+      isEmpty = false;
+    }
+  })
+
+  if (!isEmpty) {
+    return null;
+  }
+
+  return {'checkList': {value}};
 }

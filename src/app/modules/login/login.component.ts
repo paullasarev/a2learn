@@ -5,11 +5,13 @@ import {
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { assign } from 'lodash';
 
 import { User }  from "../../entities/user";
 import { AuthUser }  from "../../entities/auth-user";
 import { AuthService } from '../../services/auth-service';
 import { LoadBlockService } from '../../services/load-block';
+import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'login',
@@ -28,14 +30,20 @@ export class LoginComponent implements OnInit, OnDestroy {
   public error: Error;
 
   public user: User;
+  public form: FormGroup;
 
   constructor(
     private router: Router,
     private location: Location,
     private changeDetectorRef: ChangeDetectorRef,
+    private formBuilder: FormBuilder,
     private loadBlockService: LoadBlockService,
     private authService: AuthService
   ) {
+      this.form = this.formBuilder.group({
+        name: ['',[Validators.required, Validators.maxLength(20)]],
+        password: ['', [Validators.required, Validators.maxLength(20)]],
+      });
   }
 
   public ngOnInit() {
@@ -43,6 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loadSubscription = this.loadBlockService.load.subscribe(this.gotLoadData.bind(this));
     this.authService.logout();
     this.user = new User("", "");
+    this.form.patchValue(this.user);
   }
 
   public ngOnDestroy() {
@@ -58,7 +67,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.changeDetectorRef.markForCheck();
     let error = auth.error;
     if (error) {
-      //this.router.navigate(['error', (error && error.message)]);
       this.error = error;
     } else if (auth.user) {
       if (this.authService.redirectUrl) {
@@ -79,6 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
     this.error = null;
+    assign(this.user, this.form.value);
     this.authService.login(this.user);
   }
 
@@ -89,21 +98,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  public onUserNameChange(name) {
-    if (this.loadIsActive) {
-      return;
-    }
-    this.user.name = name;
-  }
-
-  public onUserPasswordChange(password) {
-    if (this.loadIsActive) {
-      return;
-    }
-    this.user.password = password;
-  }
-
   public isValid(): boolean{
-    return !!this.user.name && !!this.user.password;
+    return this.form.valid;
   }
 }

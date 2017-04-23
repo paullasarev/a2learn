@@ -13,6 +13,7 @@ import {
   FormInputTextareaComponent,
   FormInputDateComponent,
   FormInputBooleanComponent,
+  FormCheckListComponent,
 } from './form/form.component';
 import { DurationPipe } from './pipes/duration.pipe';
 
@@ -28,6 +29,7 @@ import { DurationPipe } from './pipes/duration.pipe';
     FormInputTextareaComponent,
     FormInputDateComponent,
     FormInputBooleanComponent,
+    FormCheckListComponent,
     DurationPipe,
   ],
   exports: [
@@ -42,6 +44,7 @@ import { DurationPipe } from './pipes/duration.pipe';
     FormInputTextareaComponent,
     FormInputDateComponent,
     FormInputBooleanComponent,
+    FormCheckListComponent,
     DurationPipe,
   ],
   imports: [

@@ -1,4 +1,5 @@
 import {CourseStatus} from "../enums/course-status";
+import {Author, Authors} from "./author";
 
 export class Course {
   public id: string;
@@ -8,6 +9,7 @@ export class Course {
   public duration: number;
   public topRated: boolean;
 
+  public authors: Authors;
   public status: CourseStatus = CourseStatus.Draft;
 
   constructor(
@@ -16,13 +18,15 @@ export class Course {
     description?: string,
     duration?: number,
     topRated?: boolean,
-    creatingDate?: Date) {
+    creatingDate?: Date,
+    authors?: Authors) {
     this.id = id || "";
     this.title = title || "";
     this.description = description || "";
     this.duration = duration || 0;
     this.topRated = topRated || false;
     this.creatingDate = creatingDate || new Date();
+    this.authors = authors || [];
   }
 }
 

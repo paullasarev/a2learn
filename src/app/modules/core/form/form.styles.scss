@@ -33,13 +33,20 @@
   &__value {
     display: table-cell;
     text-align: left;
+
+    &--list {
+      border: 1px solid $color-input-border;
+      padding: 5px;
+    }
+    .ng-invalid > &--list {
+      border-color: $color-input-border-error;
+    }
   }
 
 }
 
 .form-value {
   box-sizing: border-box;
-  width: 100%;
   font-size: $input-font-size;
 
   &--input {
@@ -77,8 +84,13 @@
     min-width: 100%;
   }
 
-  &--date {
-    width: 80px;
+  &--input-date {
+    height: $input-height;
+    outline: none;
+    border: 1px solid $color-input-border;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 170px;
   }
 
   &-tip {
@@ -90,6 +102,12 @@
     width: 14px;
     margin-left: 0;
     vertical-align: -5px;
+  }
+
+  &--inline {
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
   }
 
 }

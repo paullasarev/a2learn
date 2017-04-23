@@ -1,9 +1,9 @@
 <div class="login">
   <div class="login__form">
     <div *ngIf="error" class="login__error">{{error.message}}</div>
-    <form-group>
-      <form-input-text label="User" [value]="user.name" (valueChange)="onUserNameChange($event)"></form-input-text>
-      <form-input-password label="Password" [value]="user.password" (valueChange)="onUserPasswordChange($event)"></form-input-password>
+    <form-group [formGroup]="form">
+      <form-input-text label="User" formControlName="name"></form-input-text>
+      <form-input-password label="Password" formControlName="password"></form-input-password>
     </form-group>
   </div>
   <div class="login__actions">

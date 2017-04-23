@@ -6,11 +6,13 @@ import {Router, ActivatedRoute, Params } from '@angular/router';
 import {Subscription} from 'rxjs';
 import {Location} from '@angular/common';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {assign} from 'lodash';
+import {assign, union, uniqWith, isEqual} from 'lodash';
 
 import {Course} from '../../../entities/course';
+import {Author, Authors} from '../../../entities/author';
 import {CoursesService} from '../../../services/courses-service';
-import {IntegerValidator} from '../../core/form/form.component';
+import {AuthorsService} from '../../../services/authors-service';
+import {IntegerValidator, NonEmptyCheckListValidator} from '../../core/form/form.component';
 
 @Component({
   selector: 'course-detail',
@@ -24,9 +26,11 @@ import {IntegerValidator} from '../../core/form/form.component';
 })
 export class CourseDetailComponent implements OnInit, OnDestroy {
   private courseSubscription: Subscription;
+  private authorsSubscription: Subscription;
 
   public id: string = "";
   public course: Course = new Course();
+  public authors: Authors = [];
   public courseForm: FormGroup;
 
   constructor(
@@ -35,7 +39,8 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private location: Location,
     private formBuilder: FormBuilder,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private authorsService: AuthorsService,
     ) {
       this.courseForm = this.formBuilder.group({
         title: ['',[Validators.required, Validators.maxLength(50)]],
@@ -43,12 +48,16 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
         creatingDate: [new Date(), [Validators.required]],
         duration: [0, [Validators.required, IntegerValidator/*, Validators.pattern('[0-9]*')*/]],
         topRated: false,
+        authors: [[], [Validators.required, NonEmptyCheckListValidator]],
       });
   }
 
   public ngOnInit() {
     this.courseSubscription = this.coursesService.item.subscribe(
       this.gotData.bind(this), this.gotError.bind(this));
+    this.authorsSubscription = this.authorsService.list.subscribe(
+      this.gotAuthors.bind(this)
+    )
     this.route.params.subscribe(this.onChangeRoute.bind(this));
   }
 
@@ -65,6 +74,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
 
     this.id = id;
     this.askCourse();
+    this.authorsService.askList({});
   }
 
   private askCourse() {
@@ -73,7 +83,28 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
 
   private setCourse(course: Course) {
     this.course = course;
-    this.courseForm.patchValue(this.course);
+    this.mergeAuthors();
+
+    let model:any = assign({}, course);
+    model.authors = this.authors.map(item => {
+      let checked = !!course.authors.find(author => author.id == item.id);
+      return {id: item.id, value: checked, label: item.firstName + ' ' + item.lastName}
+    });
+    this.courseForm.patchValue(model);
+  }
+
+  private gotAuthors(authors: Authors) {
+    this.setAuthors(authors);
+    this.setCourse(this.course);
+    this.changeDetectorRef.markForCheck();
+  }
+
+  private mergeAuthors() {
+    this.authors = uniqWith(union(this.course.authors, this.authors), isEqual);
+  }
+
+  private setAuthors(authors: Authors) {
+    this.authors = authors;
   }
 
   private gotData(course: Course) {
@@ -89,10 +120,19 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   public doSave() {
-    assign(this.course, this.courseForm.value);
     if (!this.courseForm.valid) {
       return;
     }
+
+    let checkedAuthorsIDs = this.courseForm.value.authors
+      .filter(item => item.value)
+      .map(item => item.id);
+    let authors = this.authors.filter((item)=>(
+      checkedAuthorsIDs.indexOf(item.id) >= 0));
+
+    let model = assign({}, this.courseForm.value);
+    model.authors = authors;
+    assign(this.course, model);
 
     if (this.course.id) {
       this.coursesService.saveItem(this.course);

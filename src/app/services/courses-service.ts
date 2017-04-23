@@ -5,6 +5,7 @@ import { find, remove, clone, each, map } from 'lodash';
 import { Router } from '@angular/router';
 
 import { Course, Courses, Filter }  from "../entities/course";
+import { Authors, Author }  from "../entities/author";
 import { LoadBlockService } from '../services/load-block';
 import { AuthorizedHttp } from '../services/authorized-http';
 
@@ -72,7 +73,8 @@ export class CoursesService {
       item.description,
       item.length,
       item.isTopRated,
-      new Date(item.date)
+      new Date(item.date),
+      map(item.authors, (item:any)=> new Author(item.id, item.firstName, item.lastName))
     );
   }
 
@@ -83,7 +85,8 @@ export class CoursesService {
       "description": course.description,
       "isTopRated": course.topRated,
       "date": course.creatingDate,
-      "length": course.duration
+      "length": course.duration,
+      "authors": course.authors,
     }
   }
 
