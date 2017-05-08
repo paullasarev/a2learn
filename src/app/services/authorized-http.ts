@@ -5,14 +5,28 @@ import { Observable } from "rxjs";
 
 import { AuthService } from './auth-service';
 
+import { Store } from '@ngrx/store';
+import { AppState, selector } from '../store/store';
+import { AuthState } from '../store/reducers/auth';
+
 @Injectable()
 export class AuthorizedHttp extends Http {
-    constructor(
-      private authService: AuthService,
+  private authState$: Observable<AuthState>;
+  private authToken: string;
+
+  constructor(
+      // private authService: AuthService,
+      private store: Store<AppState>,
       backend: ConnectionBackend,
       defaultOptions: RequestOptions) {
       super(backend, defaultOptions)
-    }
+      this.authState$ = store.select(selector.auth);
+       this.authState$.subscribe(this.onAuthState.bind(this));
+  }
+
+  private onAuthState(state: AuthState) {
+    this.authToken = state.token;
+  }
 
     request(url: string | Request, pOptions?: RequestOptionsArgs): Observable<Response> {
       let options = pOptions;
@@ -27,7 +41,7 @@ export class AuthorizedHttp extends Http {
         options = url;
       }
 
-      options.headers.set('Authorization', 'Bearer ' + this.authService.getToken());
+      options.headers.set('Authorization', 'Bearer ' + this.authToken);
       options.withCredentials = true;
 
       return super.request(url, pOptions)

@@ -24,6 +24,14 @@ import { AuthorsService } from '../../services/authors-service';
 
 import { ROUTES } from './app.routes';
 
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+
+import { Store } from '@ngrx/store';
+import { reducer, AppState } from '../../store/store';
+import { AuthEffects } from '../../store/effects/auth';
+
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
@@ -39,6 +47,9 @@ import { ROUTES } from './app.routes';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
+    StoreModule.provideStore(reducer),
+    StoreDevtoolsModule.instrumentOnlyWithExtension({maxAge: 15}),
+    EffectsModule.run(AuthEffects),
     HttpModule,
     CoursesModule,
     CoreModule,
@@ -53,10 +64,10 @@ import { ROUTES } from './app.routes';
     LoadBlockService,
     {
       provide: AuthorizedHttp,
-      useFactory: (authService:AuthService, backend: XHRBackend, options: RequestOptions) => {
-        return new AuthorizedHttp(authService, backend, options);
+      useFactory: (store:Store<AppState>, backend: XHRBackend, options: RequestOptions) => {
+        return new AuthorizedHttp(store, backend, options);
       },
-      deps: [AuthService, XHRBackend, RequestOptions]
+      deps: [Store, XHRBackend, RequestOptions]
     }
   ]
 })
