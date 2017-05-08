@@ -70,10 +70,6 @@ export class CoursesEffects {
       this.router.navigate(['courses', course.id], {replaceUrl: true});
       return {type: 'NO_ACTION'};
     })
-    // .withLatestFrom<Response,  CoursesState>(this.store.select(selector.courses))
-    // .map(([response, state]) => {
-    //   return new GetListAction(state.filter);
-    // })
   ;
 
   @Effect() remove$ = this.actions$
