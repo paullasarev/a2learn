@@ -31,6 +31,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { reducer, AppState } from '../../store/store';
 import { AuthEffects } from '../../store/effects/auth';
+import { CoursesEffects } from '../../store/effects/courses';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -50,6 +51,7 @@ import { AuthEffects } from '../../store/effects/auth';
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension({maxAge: 15}),
     EffectsModule.run(AuthEffects),
+    EffectsModule.run(CoursesEffects),
     HttpModule,
     CoursesModule,
     CoreModule,

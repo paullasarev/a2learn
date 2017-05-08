@@ -3,16 +3,21 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 import {Router, ActivatedRoute, Params } from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Subscription, Observable} from 'rxjs';
 import {Location} from '@angular/common';
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {assign, union, uniqWith, isEqual} from 'lodash';
 
 import {Course} from '../../../entities/course';
 import {Author, Authors} from '../../../entities/author';
-import {CoursesService} from '../../../services/courses-service';
+// import {CoursesService} from '../../../services/courses-service';
 import {AuthorsService} from '../../../services/authors-service';
 import {IntegerValidator, NonEmptyCheckListValidator} from '../../core/form/form.component';
+
+import { Store } from '@ngrx/store';
+import { AppState, selector } from '../../../store/store';
+import { CoursesState } from '../../../store/reducers/courses';
+import { SaveItemAction, NewItemAction, GetItemAction }  from '../../../store/actions/courses';
 
 @Component({
   selector: 'course-detail',
@@ -33,15 +38,20 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   public authors: Authors = [];
   public courseForm: FormGroup;
 
+  private coursesState$: Observable<CoursesState>;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
     private location: Location,
     private formBuilder: FormBuilder,
-    private coursesService: CoursesService,
+    private store: Store<AppState>,
+    // private coursesService: CoursesService,
     private authorsService: AuthorsService,
     ) {
+      this.coursesState$ = this.store.select(selector.courses);
+
       this.courseForm = this.formBuilder.group({
         title: ['',[Validators.required, Validators.maxLength(50)]],
         description: ['', [Validators.required, Validators.maxLength(500)]],
@@ -53,8 +63,9 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit() {
-    this.courseSubscription = this.coursesService.item.subscribe(
-      this.gotData.bind(this), this.gotError.bind(this));
+    this.coursesState$.subscribe(this.onChangeState.bind(this))
+    // this.courseSubscription = this.coursesService.item.subscribe(
+    //   this.gotData.bind(this), this.gotError.bind(this));
     this.authorsSubscription = this.authorsService.list.subscribe(
       this.gotAuthors.bind(this)
     )
@@ -62,7 +73,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this.courseSubscription.unsubscribe();
+    // this.courseSubscription.unsubscribe();
   }
 
   private onChangeRoute(params: Params) {
@@ -77,8 +88,13 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     this.authorsService.askList({});
   }
 
+  private onChangeState(state: CoursesState) {
+    this.gotData(state.item);
+  }
+
   private askCourse() {
-    this.coursesService.askItem(this.id);
+    // this.coursesService.askItem(this.id);
+    this.store.dispatch(new GetItemAction(this.id));
   }
 
   private setCourse(course: Course) {
@@ -135,12 +151,14 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     assign(this.course, model);
 
     if (this.course.id) {
-      this.coursesService.saveItem(this.course);
+      // this.coursesService.saveItem(this.course);
+      this.store.dispatch(new SaveItemAction(this.course));
     } else {
-      this.coursesService.newItem(this.course)
-        .then((course: Course) => {
-          this.router.navigate(['courses', course.id], {replaceUrl: true});
-        });
+      this.store.dispatch(new NewItemAction(this.course))
+      // this.coursesService.newItem(this.course)
+      //   .then((course: Course) => {
+      //     this.router.navigate(['courses', course.id], {replaceUrl: true});
+      //   });
     }
   }
 

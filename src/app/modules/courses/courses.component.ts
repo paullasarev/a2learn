@@ -2,11 +2,16 @@ import {
   Component, ViewEncapsulation, OnInit, OnDestroy,
   ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { Course, Courses, Filter } from '../../entities/course';
-import { CoursesService } from '../../services/courses-service';
+// import { CoursesService } from '../../services/courses-service';
+
+import { Store } from '@ngrx/store';
+import { AppState, selector } from '../../store/store';
+import { CoursesState } from '../../store/reducers/courses';
+import { GetListAction, RemoveItemAction }  from '../../store/actions/courses';
 
 @Component({
   selector: 'courses',
@@ -23,21 +28,29 @@ export class CoursesComponent implements OnInit, OnDestroy {
   private courseToDelete: Course;
   public isNoData: boolean = true;
   public filter: Filter = {start: 0, count: 5, query: "", sort:"date", reverse: false};
+  private coursesState$: Observable<CoursesState>;
 
   constructor(
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
-    private coursesService: CoursesService,
+    private store: Store<AppState>,
+    // private coursesService: CoursesService,
   ) {
+    this.coursesState$ = this.store.select(selector.courses);
   }
 
   public ngOnInit() {
-    this.coursesSubscription = this.coursesService.list.subscribe(this.gotData.bind(this));
+    // this.coursesSubscription = this.coursesService.list.subscribe(this.gotData.bind(this));
+    this.coursesState$.subscribe(this.onChangeState.bind(this))
     this.askData();
   }
 
   public ngOnDestroy() {
-    this.coursesSubscription.unsubscribe();
+    // this.coursesSubscription.unsubscribe();
+  }
+
+  private onChangeState(state: CoursesState) {
+    this.gotData(state.list);
   }
 
   private gotData(courses: Courses) {
@@ -49,7 +62,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   private askData() {
     this.isLoading = true;
-    this.coursesService.askList(this.filter);
+    // this.coursesService.askList(this.filter);
+    this.store.dispatch(new GetListAction(this.filter));
   }
 
   public onFind(query: string) {
@@ -69,7 +83,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   public doConfirmDelete() {
-    this.coursesService.removeItem(this.courseToDelete.id);
+    // this.coursesService.removeItem(this.courseToDelete.id);
+    this.store.dispatch(new RemoveItemAction(this.courseToDelete.id));
     this.showDeleteConfirm = false;
     this.changeDetectorRef.markForCheck();
   }
