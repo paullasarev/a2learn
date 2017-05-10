@@ -151,7 +151,7 @@ export class CoursesEffects {
       .put(this.apiUrl + '/' + course.id, this.encodeCourse(course))
       .catch((response: Response) => {
         this.router.navigate(['error', this.getStatus(course.id, response)]);
-        return Observable.of([]);
+        return Observable.of(null);
       })
   }
 
@@ -160,7 +160,7 @@ export class CoursesEffects {
       .post(this.apiUrl, this.encodeCourse(course))
       .catch((response: Response) => {
         this.router.navigate(['error', this.getStatus("new", response)]);
-        return Observable.of([]);
+        return Observable.of(null);
       })
   }
 
@@ -169,7 +169,7 @@ export class CoursesEffects {
       .delete(this.apiUrl + '/' + id)
       .catch((response: Response) => {
         this.router.navigate(['error', this.getStatus("remove", response)]);
-        return Observable.of([]);
+        return Observable.of(null);
       })
   }
 
