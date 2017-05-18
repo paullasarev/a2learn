@@ -7,6 +7,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+
 var isProd = false;
 var isDev = false;
 var isTest = false;
@@ -25,6 +26,7 @@ switch (process.env.NODE_ENV) {
     isDev = true;
     break;
 }
+console.log('process.env.NODE_ENV', process.env.NODE_ENV, isTest)
 
 var config  = {
   context: path.resolve(__dirname, 'src'),
@@ -55,7 +57,8 @@ var config  = {
     publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
-    sourceMapFilename: '[name].map'
+    sourceMapFilename: '[name].map',
+    // jsonpFunction: "window.webpackJsonp2"
   },
   //devtool: 'eval', //quick
   devtool: 'source-map', //standard
