@@ -19,9 +19,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'build/polyfills.js',
-      'build/vendor.js',
-      'build/app.js',
+      // 'build/app.js',
+      // 'build/polyfills.js',
+      // 'build/vendor.js',
       { pattern: './config/spec-bundle.js', watched: false },
       'src/test/**/*.spec.*'
     ],

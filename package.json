@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "serve": "webpack-dev-server",
+    "test": "karma start",
     "build": "webpack"
   },
   "repository": {

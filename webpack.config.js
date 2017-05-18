@@ -74,15 +74,13 @@ var config  = {
     new CaseSensitivePathsPlugin(),
 
     new webpack.DefinePlugin({
-      PRODUCTION: isProd
+      PRODUCTION: isProd,
+      TEST: isTest
     }),
     new HtmlWebpackPlugin({
       title: 'Test',
       hash: true,
       template: './index.html'
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
     }),
     new ExtractTextPlugin({
       filename: '[name].[contenthash].css',
@@ -128,6 +126,13 @@ var config  = {
   }
 
 };
+
+if (isTest) {
+  delete config.entry.vendor;
+} else {
+  config.plugins.push(new webpack.optimize.CommonsChunkPlugin({name: 'vendor'}));
+}
+
 
 if (isProd) {
   config.plugins.push(new webpack.optimize.UglifyJsPlugin());
