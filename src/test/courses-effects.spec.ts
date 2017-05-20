@@ -102,4 +102,26 @@ describe('courses Effect', () => {
       expect(result).toEqual(new UpdateItemAction(course));
     });
   });
+
+  it('should return a UpdateItem action after GetItem request', () => {
+    let options = new ResponseOptions({
+      body:[courseBody],
+      status: 200,
+    } )
+    let response = new Response(options);
+    http.setResonse(coursesEffects.apiUrl, response);
+
+    runner.queue(new GetListAction({
+      start: 0,
+      count: 10,
+      query: "",
+      sort: "",
+      reverse: false,
+    }));
+
+    coursesEffects.item$.subscribe(result => {
+      expect(result).toEqual({type: ActionTypes.GET_LIST, payload:course});
+    });
+  });
+
 });

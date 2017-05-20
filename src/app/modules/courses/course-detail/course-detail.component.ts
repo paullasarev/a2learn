@@ -125,7 +125,6 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   private gotData(course: Course) {
-    console.log('gotData', this.id, course.id)
     if (course.id == this.id) {
       this.setCourse(course);
     }
