@@ -10,16 +10,13 @@ import { DurationPipe } from '../app/modules/core/pipes/duration.pipe';
 import { Course } from '../app/entities/course';
 import { Author } from '../app/entities/author';
 
-class RouterStub {
-  navigate(data: any) {}
-}
+import {FakeRouter} from './fake/fake-router';
 
 describe("courses", function() {
   let comp: CourseComponent;
   let fixture: ComponentFixture<CourseComponent>;
-  let de: DebugElement;
-  let el: HTMLElement;
   let course: Course;
+  let fakeRouter = new FakeRouter();
 
   beforeEach(()=>{
     TestBed.configureTestingModule({
@@ -30,7 +27,7 @@ describe("courses", function() {
         ActionComponent,
       ],
       providers: [
-        { provide: Router, useClass: RouterStub },
+        { provide: Router, useValue: fakeRouter },
       ],
     }).compileComponents();
 
@@ -46,8 +43,6 @@ describe("courses", function() {
       [new Author("10", "John", "Dow")]
     );
     comp.course = course;
-    de = fixture.debugElement.query(By.css('.course'));
-    el = de.nativeElement;
 
     fixture.detectChanges();
   });
@@ -64,6 +59,14 @@ describe("courses", function() {
 
   it('do Edit should route', () => {
     comp.doEdit();
+    expect(fakeRouter.navigated).toEqual(['courses', course.id])
+  })
+
+  it('doDelete shoud emit', (done)=>{
+    comp.remove.subscribe((event)=>{
+      expect(event).toEqual(course);
+      done();
+    })
     comp.doDelete();
   })
 })

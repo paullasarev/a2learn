@@ -77,6 +77,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   private onChangeRoute(params: Params) {
+    console.log('onChangeRoute', params)
     let id:string = params.id || "";
 
     if (!id || this.id !== id) {
