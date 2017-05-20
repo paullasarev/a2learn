@@ -4,6 +4,7 @@ import {DebugElement} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {Subscription, Observable, Subject} from 'rxjs';
 import {Location} from '@angular/common';
+import * as _ from 'lodash';
 
 import { CourseDetailComponent } from '../app/modules/courses/course-detail/course-detail.component';
 import { ActionComponent } from '../app/modules/core/action/action.component';
@@ -16,6 +17,9 @@ import { StoreModule } from '@ngrx/store';
 import { AppState, selector, reducer } from '../app/store/store';
 
 import {AuthorsService} from '../app/services/authors-service';
+
+import { UpdateItemAction, ActionTypes }  from '../app/store/actions/courses';
+
 
 import {
   FormComponent,
@@ -44,6 +48,7 @@ describe("courses", function() {
   let activatedRoute = new FakeActivatedRoute();
   let fakeLocation = new FakeLocation();
   let authorsService = new FakeAuthorsService();
+  let store$: Store<AppState>;
 
   beforeEach(()=>{
     TestBed.configureTestingModule({
@@ -74,6 +79,8 @@ describe("courses", function() {
       ],
     }).compileComponents();
 
+    store$ = TestBed.get( Store );
+
     fixture = TestBed.createComponent(CourseDetailComponent);
     comp = fixture.componentInstance;
     course = new Course(
@@ -97,9 +104,44 @@ describe("courses", function() {
   }));
 
   it('id should be rendered', (() => {
-      console.log('comp.id1', comp.id)
       let el = fixture.debugElement.query(By.css('.course-detail'));
       expect(el.nativeElement.textContent).toContain(course.id);
   }));
+
+  it('id should get course data', ((done) => {
+    store$.dispatch(new UpdateItemAction(course));
+    fixture.whenStable().then(() => {
+      expect(comp.course).toEqual(course);
+      done();
+    })
+  }));
+
+  // function updateCourse(comp: CourseDetailComponent) {
+  //   let controls = comp.courseForm.controls;
+  //   [ 'title', 'description', 'creatingDate', 'duration', 'topRated', 'authors']
+  //     .forEach((key)=>{
+  //       controls[key].setValue(comp.course[key]);
+  //     })
+  // }
+
+  it('should be validForm', () => {
+    store$.dispatch(new UpdateItemAction(course));
+    fixture.whenStable().then(() => {
+      expect(comp.courseForm.valid).toBeTruthy();
+    })
+  });
+
+  it('save should dispatch SaveItemAction', () => {
+    store$.dispatch(new UpdateItemAction(course));
+    fixture.whenStable().then(() => {
+      spyOn(store$, 'dispatch');
+      comp.doSave();
+      expect(store$.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
+        type: ActionTypes.SAVE_ITEM,
+        payload: course
+      }))
+    })
+  });
+
 
 })

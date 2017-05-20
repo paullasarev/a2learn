@@ -77,7 +77,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   private onChangeRoute(params: Params) {
-    console.log('onChangeRoute', params)
+    // console.log('onChangeRoute', params)
     let id:string = params.id || "";
 
     if (!id || this.id !== id) {
@@ -125,6 +125,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   private gotData(course: Course) {
+    console.log('gotData', this.id, course.id)
     if (course.id == this.id) {
       this.setCourse(course);
     }

@@ -19,7 +19,7 @@ import { CoursesState } from '../../store/reducers/courses';
 @Injectable()
 export class CoursesEffects {
 
-  private apiUrl = "/api/courses";
+  public apiUrl = "/api/courses";
 
   constructor(
     private http: Http,
@@ -117,12 +117,12 @@ export class CoursesEffects {
     return 'Course ' + id + ': ' + response.statusText + ' ('  + response.status + ')';
   }
 
-  private extractCourses(response: Response): Courses {
+  public extractCourses(response: Response): Courses {
     let body = response.json();
     return map<any, Course>(body, this.extractCourse.bind(this));
   }
 
-  private extractCourse(item: any): Course {
+  public extractCourse(item: any): Course {
     return new Course(
       item.id,
       item.name,
@@ -134,7 +134,7 @@ export class CoursesEffects {
     );
   }
 
-  private encodeCourse(course: Course): any {
+  public encodeCourse(course: Course): any {
     return {
       "id": course.id,
       "name": course.title,
