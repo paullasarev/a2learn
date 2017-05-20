@@ -23,7 +23,8 @@ module.exports = function(config) {
       // 'build/polyfills.js',
       // 'build/vendor.js',
       { pattern: './config/spec-bundle.js', watched: false },
-      'src/test/**/*.spec.*'
+      { pattern: './src/app/assets/**/*', watched: false, included: false, served: true, nocache: false },
+      // 'src/test/**/*.spec.*'
     ],
 
     webpack: testWebpackConfig,
@@ -38,15 +39,36 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap']
+      './config/spec-bundle.js': ['coverage', 'webpack', 'sourcemap'],
+      './src/**/*.ts': 'coverage',
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage', 'remap-coverage'],
 
+    // coverageReporter: {
+    //   type : 'html',
+    //   dir : 'coverage/',
+    //   includeAllSources: true,
+    // },
+    // remapCoverageReporter: {
+    //   'text-summary': null,
+    //   json: './coverage/coverage.json',
+    //   html: './coverage/html'
+    // },
+
+    coverageReporter: {
+      type: 'in-memory'
+    },
+
+    remapCoverageReporter: {
+      'text-summary': null,
+      json: './coverage/coverage.json',
+      html: './coverage/html'
+    },
 
     // web server port
     port: 9876,
@@ -59,6 +81,7 @@ module.exports = function(config) {
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
+    // logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -76,6 +99,12 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
+    concurrency: Infinity,
+
+
+    plugins: ['karma-webpack', 'karma-sourcemap-loader',
+      'karma-chrome-launcher',
+      'karma-jasmine', 'karma-typescript', 'karma-coverage', 'karma-remap-coverage'
+      ],
   })
 }

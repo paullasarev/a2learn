@@ -129,6 +129,29 @@ var config  = {
 
 if (isTest) {
   delete config.entry.vendor;
+  let awesomeLoaderOptions = config.module.rules[0].options;
+  awesomeLoaderOptions.sourceMap = false;
+  awesomeLoaderOptions.inlineSourceMap = true;
+
+  config.module.rules.push(
+        /**
+         * Instruments JS files with Istanbul for subsequent code coverage reporting.
+         * Instrument only testing sources.
+         *
+         * See: https://github.com/deepsweet/istanbul-instrumenter-loader
+         */
+        {
+          enforce: 'post',
+          test: /\.(js|ts)$/,
+          loader: 'istanbul-instrumenter-loader',
+          include: helpers.root('src'),
+          exclude: [
+            /\.(e2e|spec)\.ts$/,
+            /node_modules/
+          ]
+        }
+  );
+
 } else {
   config.plugins.push(new webpack.optimize.CommonsChunkPlugin({name: 'vendor'}));
 }
