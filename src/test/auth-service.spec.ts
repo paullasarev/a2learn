@@ -43,9 +43,37 @@ describe('auth-service', () => {
 
   })
 
-  it('should auth user', () => {
+  it('should auth user', (done) => {
     let options = new ResponseOptions({body:userBody,status: 200} )
     http.setPostResonse(authService.authUrl, new Response(options));
+    authService.auth.subscribe((authUser:AuthUser)=>{
+      expect(authUser).toEqual(new AuthUser(user))
+      expect(authService.isLoggedIn()).toBeTruthy();
+      done();
+    });
+    authService.login(user);
+  });
+
+  it('should set auth token', (done) => {
+    let options = new ResponseOptions({body:userBody,status: 200} )
+    http.setPostResonse(authService.authUrl, new Response(options));
+    authService.auth.subscribe((authUser:AuthUser)=>{
+      expect(authService.getToken()).toEqual(userBody.token);
+      done();
+    });
+    authService.login(user);
+  });
+
+  it('logout should reset user', (done) => {
+    let options = new ResponseOptions({body:userBody,status: 200} )
+    http.setPostResonse(authService.authUrl, new Response(options));
+    authService.auth.skip(1).subscribe((authUser:AuthUser)=>{
+      expect(authUser).toEqual(new AuthUser(null))
+      expect(authService.isLoggedIn()).toBeFalsy();
+      done();
+    });
+    authService.login(user);
+    authService.logout();
   });
 
 

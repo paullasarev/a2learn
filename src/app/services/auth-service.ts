@@ -21,6 +21,10 @@ export class AuthService {
   private askRequests: Subject<AuthUser>;
   private auth$: Observable<AuthUser>;
 
+  public getUser():AuthUser {
+    return this.user;
+  }
+
   constructor(
     private http: Http,
     private loadBlockService: LoadBlockService,
@@ -34,6 +38,7 @@ export class AuthService {
         .do(()=>{this.loadBlockService.show()})
         .switchMap((user: User) => {
           if (!user) {
+            this.user = this.errorUser;
             return Observable.of(this.errorUser);
           }
           return this.http.post(this.authUrl, {
