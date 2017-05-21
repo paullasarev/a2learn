@@ -91,10 +91,7 @@ describe('courses Effect', () => {
   ));
 
   it('should return a UpdateItem action after GetItem request', (done) => {
-    let options = new ResponseOptions({
-      body:courseBody,
-      status: 200,
-    } )
+    let options = new ResponseOptions({body:courseBody,status: 200} )
     http.setResonse(coursesEffects.apiUrl + '/' + course.id, new Response(options));
 
     coursesEffects.item$.subscribe(result => {

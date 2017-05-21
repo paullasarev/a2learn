@@ -53,7 +53,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.gotData(state.list);
   }
 
-  private gotData(courses: Courses) {
+  public gotData(courses: Courses) {
     this.isLoading = false;
     this.courses = courses;
     this.isNoData = !this.courses.length;

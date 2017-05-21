@@ -15,7 +15,7 @@ export class AuthService {
   private user: AuthUser;
 
   // private authUrl = "http://localhost:3004/auth/login";
-  private authUrl = "/api/auth/login";
+  public authUrl = "/api/auth/login";
 
   private authRequests: Subject<User>;
   private askRequests: Subject<AuthUser>;

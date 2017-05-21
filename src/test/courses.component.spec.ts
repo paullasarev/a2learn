@@ -19,7 +19,7 @@ import { AppState, selector, reducer } from '../app/store/store';
 import { Course, Courses } from '../app/entities/course';
 import { Author } from '../app/entities/author';
 
-import { ActionTypes }  from '../app/store/actions/courses';
+import { ActionTypes, UpdateListAction }  from '../app/store/actions/courses';
 
 import {FakeRouter} from './fake/fake-router';
 
@@ -66,23 +66,45 @@ describe("courses", function() {
     );
     comp.courses = [course];
 
+    fixture.autoDetectChanges(true);
     fixture.detectChanges();
   });
 
   it('title should be rendered', function() {
-    let el= fixture.debugElement.query(By.css('.courses__list'));
-
+    let el = fixture.debugElement.query(By.css('.courses__list'));
     expect(el).toBeDefined();
   })
 
   it('confirm Delete should dispatch DeletItemAction', () => {
     spyOn(store$, 'dispatch');
-    comp.courseToDelete = course;
+    comp.onRemove(course);
     comp.doConfirmDelete();
     expect(store$.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
       type: ActionTypes.REMOVE_ITEM,
       payload: course.id,
     }))
+  });
+
+  it('cancel delete should hide popup', () => {
+    comp.onRemove(course);
+    expect(comp.showDeleteConfirm).toBeTruthy();
+    comp.doCancelDelete();
+    expect(comp.showDeleteConfirm).toBeFalsy();
+  })
+
+
+  it('add should route', () => {
+    comp.onAdd("");
+    expect(fakeRouter.navigated).toEqual(['courses/new']);
+  })
+
+  it('UdateList should process new data', (done) => {
+    spyOn(comp, 'gotData');
+    store$.dispatch(new UpdateListAction([course]))
+    fixture.whenStable().then(()=>{
+      expect(comp.gotData).toHaveBeenCalledWith(jasmine.arrayContaining([course]))
+      done();
+    })
   });
 
 })
