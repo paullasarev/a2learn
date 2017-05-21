@@ -25,7 +25,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   public courses: Course[];
   private isLoading: boolean = false;
   public showDeleteConfirm: boolean = false;
-  private courseToDelete: Course;
+  public courseToDelete: Course;
   public isNoData: boolean = true;
   public filter: Filter = {start: 0, count: 5, query: "", sort:"date", reverse: false};
   private coursesState$: Observable<CoursesState>;

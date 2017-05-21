@@ -44,6 +44,13 @@ describe('courses Effect', () => {
     ],
     "length": 157
   };
+  let filter  = {
+    start: 0,
+    count: 10,
+    query: "",
+    sort: "date",
+    reverse: false,
+  };
 
   beforeEach(()=>{
     course = new Course(
@@ -83,45 +90,64 @@ describe('courses Effect', () => {
     }
   ));
 
-  beforeEach(()=>{
-
-  });
-
-
-  it('should return a UpdateItem action after GetItem request', () => {
+  it('should return a UpdateItem action after GetItem request', (done) => {
     let options = new ResponseOptions({
       body:courseBody,
       status: 200,
     } )
-    let response = new Response(options);
-    http.setResonse(coursesEffects.apiUrl + '/' + course.id, response);
-
-    runner.queue(new GetItemAction(course.id));
+    http.setResonse(coursesEffects.apiUrl + '/' + course.id, new Response(options));
 
     coursesEffects.item$.subscribe(result => {
       expect(result).toEqual(new UpdateItemAction(course));
+      done();
     });
+
+    runner.queue(new GetItemAction(course.id));
   });
 
-  it('should return a UpdateItem action after GetItem request', () => {
-    let options = new ResponseOptions({
-      body:[courseBody],
-      status: 200,
-    } )
-    let response = new Response(options);
-    http.setResonse(coursesEffects.apiUrl, response);
+  it('should return a UpdateList action after GetItem request', (done) => {
+    let options = new ResponseOptions({body:[courseBody], status: 200});
+    http.setResonse(coursesEffects.apiUrl, new Response(options));
 
-    runner.queue(new GetListAction({
-      start: 0,
-      count: 10,
-      query: "",
-      sort: "",
-      reverse: false,
-    }));
-
-    coursesEffects.item$.subscribe(result => {
-      expect(result).toEqual({type: ActionTypes.GET_LIST, payload:course});
+    coursesEffects.list$.subscribe(result => {
+      expect(result.type).toEqual(ActionTypes.UPDATE_LIST);
+      done();
     });
+
+    runner.queue(new GetListAction(filter));
+  });
+
+  it('should return a GetListAction action after SaveItem request', (done) => {
+    let options = new ResponseOptions({body:courseBody, status: 200});
+    http.setPutResonse(coursesEffects.apiUrl + '/' + course.id, new Response(options));
+
+    coursesEffects.save$.subscribe(result => {
+      expect(result.type).toEqual(ActionTypes.GET_LIST);
+      done();
+    });
+    runner.queue(new SaveItemAction(course));
+  });
+
+  it('should return a NO_ACTION action after NewItem request', (done) => {
+    let options = new ResponseOptions({body:courseBody, status: 200});
+    http.setPostResonse(coursesEffects.apiUrl, new Response(options));
+
+    coursesEffects.new$.subscribe(result => {
+      expect(result.type).toEqual('NO_ACTION');
+      done();
+    });
+    runner.queue(new NewItemAction(course));
+  });
+
+  it('should return a GetListAction action after RemoveItem request', (done) => {
+    let options = new ResponseOptions({body:courseBody, status: 200});
+    http.setDeleteResonse(coursesEffects.apiUrl + '/' + course.id, new Response(options));
+
+    coursesEffects.remove$.subscribe(result => {
+      expect(result.type).toEqual(ActionTypes.GET_LIST);
+      done();
+    });
+    runner.queue(new RemoveItemAction(course.id));
   });
 
 });

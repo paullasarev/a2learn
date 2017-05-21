@@ -116,14 +116,6 @@ describe("courses", function() {
     })
   }));
 
-  // function updateCourse(comp: CourseDetailComponent) {
-  //   let controls = comp.courseForm.controls;
-  //   [ 'title', 'description', 'creatingDate', 'duration', 'topRated', 'authors']
-  //     .forEach((key)=>{
-  //       controls[key].setValue(comp.course[key]);
-  //     })
-  // }
-
   it('should be validForm', () => {
     store$.dispatch(new UpdateItemAction(course));
     fixture.whenStable().then(() => {
